@@ -1,7 +1,7 @@
 import React from 'react';
 import {registry} from '@jahia/ui-extender';
-import {Lock} from "@jahia/moonstone";
-import {CopyToAllLanguagesActionComponent} from "./CopyToAllLanguagesActionComponent";
+import {Lock} from '@jahia/moonstone';
+import {CopyToAllLanguagesActionComponent} from './CopyToAllLanguagesActionComponent';
 
 export default () => {
     registry.add('action', 'copyToAllLanguages', {

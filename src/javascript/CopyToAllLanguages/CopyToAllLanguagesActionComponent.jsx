@@ -1,21 +1,24 @@
 import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
-import {useTranslation} from "react-i18next";
+import {useTranslation} from 'react-i18next';
 import {ComponentRendererContext} from '@jahia/ui-extender';
-import {CopyToAllLanguages} from "./CopyToAllLanguages";
+import {CopyToAllLanguages} from './CopyToAllLanguages';
 
 export const CopyToAllLanguagesActionComponent = ({path, render: Render, loading: Loading, ...others}) => {
     const componentRenderer = useContext(ComponentRendererContext);
-    const {t} = useTranslation('copy-to-all-languages');
+
+    // Load namespace
+    useTranslation('copy-to-all-languages');
 
     return (
         <Render
             {...others}
-            isVisible={true}
-            enabled={true}
+            isVisible
+            enabled
             onClick={() => {
                 componentRenderer.render('copyToAllLanguages', CopyToAllLanguages, {
                         path,
+                        property: 'text',
                         isOpen: true,
                         onClose: () => {
                             componentRenderer.setProperties('copyToAllLanguages', {isOpen: false});

@@ -1,5 +1,5 @@
 .subheading {
-    padding: 0 0 16px 0;
+    padding: 0 0 16px;
 }
 
 .actions {
@@ -13,9 +13,9 @@
 }
 
 .languages {
+    max-height: 260px;
     margin: 0 -8px;
     overflow-y: scroll;
-    max-height: 260px;
 }
 
 .item {
