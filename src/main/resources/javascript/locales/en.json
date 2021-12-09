@@ -1,0 +1,13 @@
+{
+  "label": {
+    "action": "Copy to all languages",
+    "dialogTitle": "Copy {{propertyName}} to other languages",
+    "languagesSelected": "{{count}} language selected",
+    "languagesSelected_plural": "{{count}} languages selected",
+    "dialogDescription": "The value of this field will be copied to all other languages, overwriting the current values.",
+    "addAll": "Add all",
+    "removeAll": "Remove all",
+    "copy": "Copy",
+    "cancel": "Cancel"
+  }
+}
