@@ -4,8 +4,12 @@ import {useTranslation} from 'react-i18next';
 import {ComponentRendererContext} from '@jahia/ui-extender';
 import {CopyToAllLanguages} from './CopyToAllLanguages';
 
-export const CopyToAllLanguagesActionComponent = ({path, render: Render, loading: Loading, ...others}) => {
+export const CopyToAllLanguagesActionComponent = ({formik, editorContext, field, render: Render, loading: Loading, ...others}) => {
     const componentRenderer = useContext(ComponentRendererContext);
+
+    if (!field.i18n) {
+        return false;
+    }
 
     // Load namespace
     useTranslation('copy-to-all-languages');
@@ -17,7 +21,7 @@ export const CopyToAllLanguagesActionComponent = ({path, render: Render, loading
             enabled
             onClick={() => {
                 componentRenderer.render('copyToAllLanguages', CopyToAllLanguages, {
-                        path,
+                    path : editorContext.nodeData.path,
                         property: 'text',
                         isOpen: true,
                         onClose: () => {

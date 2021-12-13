@@ -7,7 +7,7 @@ export default () => {
     registry.add('action', 'copyToAllLanguages', {
         buttonIcon: <Lock/>,
         buttonLabel: 'copy-to-all-languages:label.action',
-        targets: ['contentActions:5.5'],
+        targets: ['content-editor/field/3dots:5.5'],
         component: CopyToAllLanguagesActionComponent
     });
 };
