@@ -1,5 +1,5 @@
 const deps = require('./package.json').dependencies;
-
+console.log(deps);
 const sharedDeps = [
     '@babel/polyfill',
     'react',

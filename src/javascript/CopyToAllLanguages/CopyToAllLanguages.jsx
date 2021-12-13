@@ -118,6 +118,10 @@ export const CopyToAllLanguages = ({path, field, isOpen, onExited, onClose}) => 
                             .map(l => (
                                 <label key={l.language} className={styles.item}>
                                     <Checkbox checked={selected.indexOf(l.language) > -1}
+                                              onChange={() => setSelected((selected.indexOf(l.language) > -1) ?
+                                                  selected.filter(s => l.language !== s) :
+                                                  [...selected, l.language]
+                                              )}
                                               name="lang"
                                               value={l.language}
                                               aria-label={l.displayName}
