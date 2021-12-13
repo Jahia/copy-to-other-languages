@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 
-export const CopyToAllLanguages = ({path, property, isOpen, onExited, onClose}) => {
+export const CopyToAllLanguages = ({path, field, isOpen, onExited, onClose}) => {
     const {t} = useTranslation('copy-to-all-languages');
     const [selected, setSelected] = useState([]);
     const [filter, setFilter] = useState('');
@@ -37,7 +37,10 @@ export const CopyToAllLanguages = ({path, property, isOpen, onExited, onClose}) 
             }
         }
     }`, {
-        variables: {path, language, property}
+        variables: {path, language, property:field.propertyName},
+        onCompleted: () => {
+            setSelected(data.jcr.nodeByPath.site.languages.filter(l => l.language !== language).map(l => l.language))
+        }
     });
 
     if (error) {
@@ -53,7 +56,10 @@ export const CopyToAllLanguages = ({path, property, isOpen, onExited, onClose}) 
             }
         }
     }`, {
-        variables: {path, property}
+        variables: {path, property: field.propertyName},
+        onCompleted: () => {
+            onClose();
+        }
     });
 
     const doCopy = selected => {
@@ -63,7 +69,7 @@ export const CopyToAllLanguages = ({path, property, isOpen, onExited, onClose}) 
                     variables: {
                         language,
                         value: data.jcr.nodeByPath.property.value
-                    }
+                    },
                 });
             });
         }
@@ -80,7 +86,7 @@ export const CopyToAllLanguages = ({path, property, isOpen, onExited, onClose}) 
                 onClose={onClose}
         >
             <DialogTitle>
-                {t('copy-to-all-languages:label.dialogTitle', {propertyName: property})}
+                {t('copy-to-all-languages:label.dialogTitle', {propertyName: field.displayName})}
             </DialogTitle>
             <DialogContent>
                 <DialogContentText>
@@ -127,6 +133,7 @@ export const CopyToAllLanguages = ({path, property, isOpen, onExited, onClose}) 
                 <Button size="big" label={t('copy-to-all-languages:label.cancel')} onClick={onClose}/>
                 <Button
                     size="big"
+                    isDisabled={selected.length === 0}
                     color="accent"
                     data-cm-role="export-button"
                     label={t('copy-to-all-languages:label.copy')}
@@ -141,7 +148,7 @@ export const CopyToAllLanguages = ({path, property, isOpen, onExited, onClose}) 
 
 CopyToAllLanguages.propTypes = {
     path: PropTypes.string.isRequired,
-    property: PropTypes.string.isRequired,
+    field: PropTypes.object.isRequired,
     isOpen: PropTypes.bool,
     onExited: PropTypes.func,
     onClose: PropTypes.func

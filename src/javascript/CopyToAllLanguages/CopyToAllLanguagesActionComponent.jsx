@@ -7,9 +7,11 @@ import {CopyToAllLanguages} from './CopyToAllLanguages';
 export const CopyToAllLanguagesActionComponent = ({formik, editorContext, field, render: Render, loading: Loading, ...others}) => {
     const componentRenderer = useContext(ComponentRendererContext);
 
-    if (!field.i18n) {
+    if (!field.i18n || editorContext.mode === "create") {
         return false;
     }
+
+    const enabled = !formik.dirty
 
     // Load namespace
     useTranslation('copy-to-all-languages');
@@ -18,11 +20,11 @@ export const CopyToAllLanguagesActionComponent = ({formik, editorContext, field,
         <Render
             {...others}
             isVisible
-            enabled
+            enabled={enabled}
             onClick={() => {
                 componentRenderer.render('copyToAllLanguages', CopyToAllLanguages, {
                     path : editorContext.nodeData.path,
-                        property: 'text',
+                        field: field,
                         isOpen: true,
                         onClose: () => {
                             componentRenderer.setProperties('copyToAllLanguages', {isOpen: false});
