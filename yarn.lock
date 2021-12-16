@@ -1080,16 +1080,16 @@
     eslint-plugin-react "^7.16.0"
     eslint-plugin-react-hooks "^2.2.0"
 
-"@jahia/moonstone@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@jahia/moonstone/-/moonstone-2.0.0.tgz#78db4d407741ad983757929f80970bf215841222"
-  integrity sha512-cvakbXE+Y8LrgF119bxeWwqcrA9BkUhoS2XC8M74k62dvu8JtiDPc22CeXDQukauitenUNFLwV1VIQ9+HgLKaQ==
+"@jahia/moonstone@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@jahia/moonstone/-/moonstone-2.0.1.tgz#30b08b129173e31ab3b869f4de1c49d9d348afc4"
+  integrity sha512-rIFJ3/uIdauUOJRzlLiVNLwan5GMjtSswKnAQpF2SQwKBtrMGk37COfRM/1XddxZhEq9D09LSM4zN397wBC32A==
   dependencies:
     "@babel/runtime" "^7.12.5"
     clsx "^1.1.1"
     prop-types "^15.7.2"
-    re-resizable "^6.9.0"
-    react-is "^17.0.1"
+    re-resizable "^6.9.1"
+    react-is "^17.0.2"
     to-px "^1.1.0"
 
 "@jahia/stylelint-config@^0.0.3":
@@ -5981,7 +5981,7 @@ randombytes@^2.1.0:
   dependencies:
     safe-buffer "^5.1.0"
 
-re-resizable@^6.9.0:
+re-resizable@^6.9.1:
   version "6.9.1"
   resolved "https://registry.yarnpkg.com/re-resizable/-/re-resizable-6.9.1.tgz#6be082b55d02364ca4bfee139e04feebdf52441c"
   integrity sha512-KRYAgr9/j1PJ3K+t+MBhlQ+qkkoLDJ1rs0z1heIWvYbCW/9Vq4djDU+QumJ3hQbwwtzXF6OInla6rOx6hhgRhQ==
