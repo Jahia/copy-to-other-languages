@@ -1,6 +1,6 @@
 {
   "label": {
-    "action": "Copier dans toutes les langues",
+    "action": "Copier dans d’autres langues",
     "dialogTitle": "Copier “{{propertyName}}” dans d’autres langues",
     "languagesSelected": "{{count}} langue sélectionnée",
     "languagesSelected_plural": "{{count}} langues sélectionnées",

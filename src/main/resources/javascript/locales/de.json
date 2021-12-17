@@ -1,17 +1,17 @@
 {
   "label": {
-    "action": "Copy to other languages",
-    "dialogTitle": "Copy “{{propertyName}}” to other languages",
-    "languagesSelected": "{{count}} language selected",
-    "languagesSelected_plural": "{{count}} languages selected",
+    "action": "In andere Sprachen kopieren",
+    "dialogTitle": "“{{propertyName}}” in andere Sprachen kopieren",
+    "languagesSelected": "{{count}} Sprache ausgewählt",
+    "languagesSelected_plural": "{{count}} Sprachen ausgewählt",
     "dialogDescription": "The value of this field will be copied to all other languages, overwriting the current values.",
     "filterLanguages": "Filter languages",
-    "noResults": "No results",
+    "noResults": "Kein Ergebnis",
     "addAll": "Add all",
     "removeAll": "Remove all",
-    "lock": "content is locked in this language",
-    "copy": "Copy",
-    "cancel": "Cancel",
+    "lock": "Inhalt ist in dieser Sprache gesperrt",
+    "copy": "Kopieren",
+    "cancel": "Abbrechen",
     "errorTitle": "Operation not available.",
     "errorContent": "An error occurred when copying “{{property}}”. Ensure that the content is not locked or that you have sufficient permissions."
   }
