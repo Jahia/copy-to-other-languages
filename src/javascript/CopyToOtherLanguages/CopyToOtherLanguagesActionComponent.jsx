@@ -2,9 +2,9 @@ import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {useTranslation} from 'react-i18next';
 import {ComponentRendererContext} from '@jahia/ui-extender';
-import {CopyToAllLanguages} from './CopyToAllLanguages';
+import {CopyToOtherLanguages} from './CopyToOtherLanguages';
 
-export const CopyToAllLanguagesActionComponent = ({
+export const CopyToOtherLanguagesActionComponent = ({
     formik,
     editorContext,
     field,
@@ -15,7 +15,7 @@ export const CopyToAllLanguagesActionComponent = ({
     const componentRenderer = useContext(ComponentRendererContext);
 
     // Load namespace
-    useTranslation('copy-to-all-languages');
+    useTranslation('copy-to-other-languages');
 
     if (!field.i18n || editorContext.mode === 'create' || editorContext.siteInfo.languages.length === 1 || !formik.values[field.name]) {
         return false;
@@ -29,17 +29,17 @@ export const CopyToAllLanguagesActionComponent = ({
             isVisible
             enabled={enabled}
             onClick={() => {
-                componentRenderer.render('copyToAllLanguages', CopyToAllLanguages, {
+                componentRenderer.render('copyToOtherLanguages', CopyToOtherLanguages, {
                     path: editorContext.nodeData.path,
                     field: field,
                     language: editorContext.lang,
                     siteLanguages: editorContext.siteInfo.languages,
                     isOpen: true,
                     onClose: () => {
-                        componentRenderer.setProperties('copyToAllLanguages', {isOpen: false});
+                        componentRenderer.setProperties('copyToOtherLanguages', {isOpen: false});
                     },
                     onExited: () => {
-                        componentRenderer.destroy('copyToAllLanguages');
+                        componentRenderer.destroy('copyToOtherLanguages');
                     }
                 });
             }}
@@ -47,7 +47,7 @@ export const CopyToAllLanguagesActionComponent = ({
     );
 };
 
-CopyToAllLanguagesActionComponent.propTypes = {
+CopyToOtherLanguagesActionComponent.propTypes = {
     formik: PropTypes.object.isRequired,
 
     editorContext: PropTypes.object.isRequired,

@@ -2,13 +2,13 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core';
 import {Button, Checkbox, Input, Typography} from '@jahia/moonstone';
 import {useTranslation} from 'react-i18next';
-import styles from './CopyToAllLanguages.scss';
+import styles from './CopyToOtherLanguages.scss';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
-import {getMutation, getQuery} from './CopyToAllLanguages.gql';
+import {getMutation, getQuery} from './CopyToOtherLanguages.gql';
 
-export const CopyToAllLanguages = ({path, language, siteLanguages, field, isOpen, onExited, onClose}) => {
-    const {t} = useTranslation('copy-to-all-languages');
+export const CopyToOtherLanguages = ({path, language, siteLanguages, field, isOpen, onExited, onClose}) => {
+    const {t} = useTranslation('copy-to-other-languages');
     const [selected, setSelected] = useState([]);
     const [filter, setFilter] = useState('');
     const [errorState, setErrorState] = useState('');
@@ -79,28 +79,28 @@ export const CopyToAllLanguages = ({path, language, siteLanguages, field, isOpen
                     onClose={onClose}
             >
                 <DialogTitle>
-                    {t('copy-to-all-languages:label.dialogTitle', {propertyName: field.displayName})}
+                    {t('copy-to-other-languages:label.dialogTitle', {propertyName: field.displayName})}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText component="div">
                         <div className={styles.subheading}>
-                            <Typography>{t('copy-to-all-languages:label.dialogDescription')}</Typography>
+                            <Typography>{t('copy-to-other-languages:label.dialogDescription')}</Typography>
                         </div>
                         <div className={styles.actions}>
                             <Button size="default"
-                                    label={t('copy-to-all-languages:label.addAll')}
+                                    label={t('copy-to-other-languages:label.addAll')}
                                     isDisabled={filteredAndAvailable.every(v => selected.includes(v))}
                                     onClick={() => data && setSelected(filteredAndAvailable)}/>
                             <Button size="default"
-                                    label={t('copy-to-all-languages:label.removeAll')}
+                                    label={t('copy-to-other-languages:label.removeAll')}
                                     isDisabled={selected.length === 0}
                                     onClick={() => data && setSelected([])}/>
                             <div className="flexFluid"/>
-                            <Typography>{t('copy-to-all-languages:label.languagesSelected', {count: selected.length})}</Typography>
+                            <Typography>{t('copy-to-other-languages:label.languagesSelected', {count: selected.length})}</Typography>
                         </div>
                         <div className={styles.actions}>
                             <Input variant="search"
-                                   placeholder={t('copy-to-all-languages:label.filterLanguages')}
+                                   placeholder={t('copy-to-other-languages:label.filterLanguages')}
                                    value={filter}
                                    onChange={e => {
                                    setFilter(e.target.value);
@@ -120,23 +120,23 @@ export const CopyToAllLanguages = ({path, language, siteLanguages, field, isOpen
                                               [...selected, l.language]
                                           )}
                                 />
-                                    {l.displayName} {data && !available.includes(l.language) && (' - ' + t('copy-to-all-languages:label.lock'))}
+                                    {l.displayName} {data && !available.includes(l.language) && (' - ' + t('copy-to-other-languages:label.lock'))}
                                 </label>
                           )
                         ) : (
-                            <div className={styles.emptylanguages}><Typography>{t('copy-to-all-languages:label.noResults')}</Typography></div>
+                            <div className={styles.emptylanguages}><Typography>{t('copy-to-other-languages:label.noResults')}</Typography></div>
                         )}
                         </div>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button size="big" label={t('copy-to-all-languages:label.cancel')} onClick={onClose}/>
+                    <Button size="big" label={t('copy-to-other-languages:label.cancel')} onClick={onClose}/>
                     <Button
                     size="big"
                     isDisabled={selected.length === 0}
                     color="accent"
                     data-cm-role="export-button"
-                    label={t('copy-to-all-languages:label.copy')}
+                    label={t('copy-to-other-languages:label.copy')}
                     onClick={() => {
                         doCopy(selected);
                     }}
@@ -151,12 +151,12 @@ export const CopyToAllLanguages = ({path, language, siteLanguages, field, isOpen
                 aria-describedby="alert-dialog-description"
                 onClose={() => setErrorState()}
             >
-                <DialogTitle id="alert-dialog-title">{t('copy-to-all-languages:label.errorTitle')}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{t('copy-to-other-languages:label.errorTitle')}</DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">{t('copy-to-all-languages:label.errorContent', {property: field.displayName})}</DialogContentText>
+                    <DialogContentText id="alert-dialog-description">{t('copy-to-other-languages:label.errorContent', {property: field.displayName})}</DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button label={t('copy-to-all-languages:label.cancel')}
+                    <Button label={t('copy-to-other-languages:label.cancel')}
                             color="accent"
                             size="big"
                             onClick={() => setErrorState()}
@@ -167,7 +167,7 @@ export const CopyToAllLanguages = ({path, language, siteLanguages, field, isOpen
     );
 };
 
-CopyToAllLanguages.propTypes = {
+CopyToOtherLanguages.propTypes = {
     path: PropTypes.string.isRequired,
     language: PropTypes.string.isRequired,
     siteLanguages: PropTypes.array.isRequired,

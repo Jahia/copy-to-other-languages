@@ -13,7 +13,7 @@ module.exports = (env, argv) => {
         },
         output: {
             path: path.resolve(__dirname, 'src/main/resources/javascript/apps/'),
-            filename: 'copy-to-all-languages.bundle.js',
+            filename: 'copy-to-other-languages.bundle.js',
             chunkFilename: '[name].jahia.[chunkhash:6].js'
         },
         resolve: {
@@ -80,8 +80,8 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new ModuleFederationPlugin({
-                name: "copyToAllLanguages",
-                library: { type: "assign", name: "appShell.remotes.copyToAllLanguages" },
+                name: "copyToOtherLanguages",
+                library: { type: "assign", name: "appShell.remotes.copyToOtherLanguages" },
                 filename: "remoteEntry.js",
                 exposes: {
                     './init': './src/javascript/init'

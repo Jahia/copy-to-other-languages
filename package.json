@@ -1,5 +1,5 @@
 {
-  "name": "@jahia/copy-to-all-languages",
+  "name": "@jahia/copy-to-other-languages",
   "version": "2.2.0",
   "scripts": {
     "build": "yarn webpack",
@@ -19,9 +19,9 @@
     "lint": "yarn lint:scss && yarn lint:js",
     "lint:fix": "yarn lint:js:fix && yarn lint:scss:fix"
   },
-  "description": "copy-to-all-languages for Jahia",
+  "description": "copy-to-other-languages for Jahia",
   "main": "index.js",
-  "repository": "git@github.com:Jahia/copy-to-all-languages.git",
+  "repository": "git@github.com:Jahia/copy-to-other-languages.git",
   "author": "Jahia Core Team <core@jahia.com>",
   "license": "MIT",
   "jahia": {
