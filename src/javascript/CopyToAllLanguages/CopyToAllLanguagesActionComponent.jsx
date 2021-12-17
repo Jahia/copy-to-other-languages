@@ -17,7 +17,7 @@ export const CopyToAllLanguagesActionComponent = ({
     // Load namespace
     useTranslation('copy-to-all-languages');
 
-    if (!field.i18n || editorContext.mode === 'create') {
+    if (!field.i18n || editorContext.mode === 'create' || editorContext.siteInfo.languages.length === 1 || !formik.values[field.name]) {
         return false;
     }
 
