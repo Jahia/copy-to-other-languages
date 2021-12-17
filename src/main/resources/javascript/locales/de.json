@@ -4,15 +4,15 @@
     "dialogTitle": "“{{propertyName}}” in andere Sprachen kopieren",
     "languagesSelected": "{{count}} Sprache ausgewählt",
     "languagesSelected_plural": "{{count}} Sprachen ausgewählt",
-    "dialogDescription": "The value of this field will be copied to all other languages, overwriting the current values.",
-    "filterLanguages": "Filter languages",
+    "dialogDescription": "Der Inhalt von diesem Feld wird in alle anderen Sprachen kopiert.",
+    "filterLanguages": "Sprachen filtern",
     "noResults": "Kein Ergebnis",
-    "addAll": "Add all",
-    "removeAll": "Remove all",
+    "addAll": "Alle hinzufügen",
+    "removeAll": "Alle Entfernen",
     "lock": "Inhalt ist in dieser Sprache gesperrt",
     "copy": "Kopieren",
     "cancel": "Abbrechen",
-    "errorTitle": "Operation not available.",
-    "errorContent": "An error occurred when copying “{{property}}”. Ensure that the content is not locked or that you have sufficient permissions."
+    "errorTitle": "Operation nicht verfügbar.",
+    "errorContent": "Ein Fehler ist aufgetreten beim kopieren von “{{property}}”. Stellen Sie sicher das der Inhalt nicht gesperrt ist und Sie die notwendigen Rechte besitzen."
   }
 }
