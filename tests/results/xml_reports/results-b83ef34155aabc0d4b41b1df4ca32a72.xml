@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="59.7180" tests="5" failures="1">
+  <testsuite name="Root Suite" timestamp="2021-12-21T14:53:49" tests="0" file="cypress/integration/copyLanguages.ts" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Test copy to other languages" timestamp="2021-12-21T14:53:49" tests="5" time="59.6890" failures="1">
+    <testcase name="Test copy to other languages Should not have copyToOtherLanguages if site has a single language" time="8.2260" classname="Should not have copyToOtherLanguages if site has a single language">
+    </testcase>
+    <testcase name="Test copy to other languages Should not have copyToOtherLanguages if not i18n" time="0.0000" classname="Should not have copyToOtherLanguages if not i18n">
+      <failure message="Timed out retrying after 30000ms: expected &apos;&lt;div.jss152.&gt;&apos; to be &apos;visible&apos;
+
+This element `&lt;div.jss152.&gt;` is not visible because its content is being clipped by one of its parent elements, which has a CSS property of overflow: `hidden`, `scroll` or `auto`" type="AssertionError"><![CDATA[AssertionError: Timed out retrying after 30000ms: expected '<div.jss152.>' to be 'visible'
+
+This element `<div.jss152.>` is not visible because its content is being clipped by one of its parent elements, which has a CSS property of overflow: `hidden`, `scroll` or `auto`
+    at Context.BaseComponent.assertion (http://localhost:8080/__cypress/tests?p=cypress/integration/copyLanguages.ts:8345:30)]]></failure>
+    </testcase>
+    <testcase name="Test copy to other languages Should open and close dialog" time="4.7050" classname="Should open and close dialog">
+    </testcase>
+    <testcase name="Test copy to other languages Should select/unselect all" time="5.4410" classname="Should select/unselect all">
+    </testcase>
+    <testcase name="Test copy to other languages Should filter" time="4.9160" classname="Should filter">
+    </testcase>
+  </testsuite>
+</testsuites>

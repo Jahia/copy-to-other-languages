@@ -1,0 +1,107 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-12-21T14:52:56.121Z",
+    "end": "2021-12-21T14:53:08.241Z",
+    "duration": 12120,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "fd36b75a-ee1f-4f19-8457-15a0a542a8aa",
+      "title": "",
+      "fullFile": "cypress/integration/copyLanguages.ts",
+      "file": "cypress/integration/copyLanguages.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "eb6daec4-2a11-40cf-8561-ac0f73fdffd0",
+          "title": "Test copy to other languages",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should filter",
+              "fullTitle": "Test copy to other languages Should filter",
+              "timedOut": null,
+              "duration": 9075,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "setLanguages([\"en\", \"fr\", \"de\"]);\ncy.visit(\"/jahia/content-editor/en/edit/\" + this.uuid);\nvar field = (0, cypress_1.getComponentByAttr)(cypress_1.BaseComponent, \"data-sel-content-editor-field\", \"jnt:mainContent_body\");\nvar button = (0, cypress_1.getComponentByRole)(cypress_1.Button, \"content-editor/field/3dots\", field);\nbutton.click();\n// cy.wait(500)\n(0, cypress_1.getComponent)(cypress_1.Menu, null, function (e) { expect(e).to.be.visible; }).selectByRole(\"copyToOtherLanguages\");\nvar dialog = (0, cypress_1.getComponentByRole)(cypress_1.BaseComponent, \"copy-language-dialog\");\nvar checkboxes = (0, cypress_1.getComponentByRole)(cypress_1.BaseComponent, \"copy-language-button\");\nvar addAll = (0, cypress_1.getComponentByRole)(cypress_1.Button, 'add-all-button', dialog);\nvar removeAll = (0, cypress_1.getComponentByRole)(cypress_1.Button, 'remove-all-button', dialog);\nvar filter = (0, cypress_1.getComponentByRole)(cypress_1.BaseComponent, 'language-filter', dialog);\n// cy.get('[data-sel-role=\"copy-language-button\"]').should('have.length',2)\ncheckboxes.should('have.length', 2);\nfilter.get().type(\"fr\");\ncheckboxes.should('have.length', 1);\nfilter.get().clear();\ncheckboxes.should('have.length', 2);\nfilter.get().type(\"xx\");\ncheckboxes.should('have.length', 0);",
+              "err": {},
+              "uuid": "9fe78644-4ffa-4799-90ac-9e68eb1aa7bf",
+              "parentUUID": "eb6daec4-2a11-40cf-8561-ac0f73fdffd0",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "9fe78644-4ffa-4799-90ac-9e68eb1aa7bf"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 9075,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "cypress",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.3.1"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "./results/reports/",
+        "reportFilename": "cypress",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.2.0"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="3.5300" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2021-12-21T14:52:48" tests="0" file="cypress/integration/api/apiDescription.spec.ts" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Test if every type in graphQL API has description" timestamp="2021-12-21T14:52:48" tests="1" time="3.4700" failures="0">
+    <testcase name="Test if every type in graphQL API has description Check every input for the User Type" time="3.4790" classname="Check every input for the User Type">
+    </testcase>
+  </testsuite>
+</testsuites>

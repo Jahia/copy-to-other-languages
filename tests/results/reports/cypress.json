@@ -1,0 +1,107 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-12-21T14:52:48.252Z",
+    "end": "2021-12-21T14:52:51.782Z",
+    "duration": 3530,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "dee0bbf3-8d36-4ad8-a07e-e8c1adc855a6",
+      "title": "",
+      "fullFile": "cypress/integration/api/apiDescription.spec.ts",
+      "file": "cypress/integration/api/apiDescription.spec.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "1f236608-a641-4c45-82e0-ab35fa16b3c1",
+          "title": "Test if every type in graphQL API has description",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Check every input for the User Type",
+              "fullTitle": "Test if every type in graphQL API has description Check every input for the User Type",
+              "timedOut": null,
+              "duration": 3479,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "var types = new Set();\nvar noDesc = new Set();\nvar invalidNames = new Set();\ncy.apolloClient()\n    .then(function (client) { return executeTest(client, 'Query', types, noDesc, invalidNames); })\n    .should(function () {\n    var noDescBlacklist = [\n        'type=JCRSite/field=findAvailableNodeName/arg=nodeType',\n        'type=JCRSite/field=findAvailableNodeName/arg=language',\n        'type=VanityUrl/field=findAvailableNodeName/arg=nodeType',\n        'type=VanityUrl/field=findAvailableNodeName/arg=language',\n        'type=GqlDashboard',\n        'type=GqlModule',\n        'type=GqlEditorForms',\n        'type=EditorForm',\n        'type=EditorFormSection',\n        'type=EditorFormFieldSet',\n        'type=EditorFormField',\n        'type=EditorFormFieldValue',\n        'type=EditorFormProperty',\n        'type=EditorFormFieldValueConstraint',\n        'type=InputContextEntryInput',\n        'inputType=InputContextEntryInput/field=key',\n        'inputType=InputContextEntryInput/field=value',\n        'type=Query/field=categoryById/arg=id',\n        'type=Metadata/field=uuid',\n        'type=Metadata/field=path',\n        'type=Category/field=uuid',\n        'type=Category/field=path',\n        'type=Query/field=categoryByPath/arg=path',\n    ];\n    noDescBlacklist.forEach(function (n) { return noDesc.delete(n); });\n    var invalidNameBlacklist = ['wipInfo'];\n    invalidNameBlacklist.forEach(function (n) { return invalidNames.delete(n); });\n    expect(JSON.stringify(Array.from(noDesc))).to.equals('[]');\n    expect(JSON.stringify(Array.from(invalidNames))).to.equals('[]');\n});",
+              "err": {},
+              "uuid": "6318999f-451c-48e9-a881-93608a621a58",
+              "parentUUID": "1f236608-a641-4c45-82e0-ab35fa16b3c1",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "6318999f-451c-48e9-a881-93608a621a58"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 3479,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "cypress",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.3.1"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "./results/reports/",
+        "reportFilename": "cypress",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.2.0"
+    }
+  }
+}

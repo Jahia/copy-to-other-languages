@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="27.1330" tests="5" failures="0">
+  <testsuite name="Root Suite" timestamp="2021-12-21T14:58:23" tests="0" file="cypress/integration/copyLanguages.ts" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Test copy to other languages" timestamp="2021-12-21T14:58:23" tests="5" time="27.1070" failures="0">
+    <testcase name="Test copy to other languages Should not have copyToOtherLanguages if site has a single language" time="6.5430" classname="Should not have copyToOtherLanguages if site has a single language">
+    </testcase>
+    <testcase name="Test copy to other languages Should not have copyToOtherLanguages if not i18n" time="2.3480" classname="Should not have copyToOtherLanguages if not i18n">
+    </testcase>
+    <testcase name="Test copy to other languages Should open and close dialog" time="4.3840" classname="Should open and close dialog">
+    </testcase>
+    <testcase name="Test copy to other languages Should select/unselect all" time="7.4800" classname="Should select/unselect all">
+    </testcase>
+    <testcase name="Test copy to other languages Should filter" time="3.7540" classname="Should filter">
+    </testcase>
+  </testsuite>
+</testsuites>

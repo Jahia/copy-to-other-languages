@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="12.1200" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2021-12-21T14:52:56" tests="0" file="cypress/integration/copyLanguages.ts" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Test copy to other languages" timestamp="2021-12-21T14:52:56" tests="1" time="12.0710" failures="0">
+    <testcase name="Test copy to other languages Should filter" time="9.0750" classname="Should filter">
+    </testcase>
+  </testsuite>
+</testsuites>
