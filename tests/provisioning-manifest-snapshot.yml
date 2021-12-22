@@ -1,0 +1,3 @@
+- installBundle: 'mvn:org.jahia.modules/copy-to-other-language'
+  autoStart: true
+  uninstallPreviousVersion: true

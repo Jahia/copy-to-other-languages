@@ -74,7 +74,7 @@ export const CopyToOtherLanguages = ({path, language, siteLanguages, field, isOp
             <Dialog fullWidth
                     open={isOpen}
                     aria-labelledby="form-dialog-title"
-                    data-cm-role="export-options"
+                    data-sel-role="copy-language-dialog"
                     onExited={onExited}
                     onClose={onClose}
             >
@@ -89,10 +89,12 @@ export const CopyToOtherLanguages = ({path, language, siteLanguages, field, isOp
                         <div className={styles.actions}>
                             <Button size="default"
                                     label={t('copy-to-other-languages:label.addAll')}
+                                    data-sel-role="add-all-button"
                                     isDisabled={filteredAndAvailable.every(v => selected.includes(v))}
                                     onClick={() => data && setSelected(filteredAndAvailable)}/>
                             <Button size="default"
                                     label={t('copy-to-other-languages:label.removeAll')}
+                                    data-sel-role="remove-all-button"
                                     isDisabled={selected.length === 0}
                                     onClick={() => data && setSelected([])}/>
                             <div className="flexFluid"/>
@@ -100,6 +102,7 @@ export const CopyToOtherLanguages = ({path, language, siteLanguages, field, isOp
                         </div>
                         <div className={styles.actions}>
                             <Input variant="search"
+                                   data-sel-role="language-filter"
                                    placeholder={t('copy-to-other-languages:label.filterLanguages')}
                                    value={filter}
                                    onChange={e => {
@@ -111,6 +114,7 @@ export const CopyToOtherLanguages = ({path, language, siteLanguages, field, isOp
                             {filtered.length > 0 ? filtered.map(l => (
                                 <label key={l.language} className={styles.item}>
                                     <Checkbox checked={selected.includes(l.language)}
+                                              data-sel-role="copy-language-button"
                                               isDisabled={!available.includes(l.language)}
                                               name="lang"
                                               value={l.language}
@@ -130,17 +134,19 @@ export const CopyToOtherLanguages = ({path, language, siteLanguages, field, isOp
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button size="big" label={t('copy-to-other-languages:label.cancel')} onClick={onClose}/>
-                    <Button
-                    size="big"
-                    isDisabled={selected.length === 0}
-                    color="accent"
-                    data-cm-role="export-button"
-                    label={t('copy-to-other-languages:label.copy')}
-                    onClick={() => {
-                        doCopy(selected);
-                    }}
-                />
+                    <Button size="big"
+                            label={t('copy-to-other-languages:label.cancel')}
+                            data-sel-role="cancel-button"
+                            onClick={onClose}/>
+                    <Button size="big"
+                            isDisabled={selected.length === 0}
+                            color="accent"
+                            data-sel-role="copy-button"
+                            label={t('copy-to-other-languages:label.copy')}
+                            onClick={() => {
+                                doCopy(selected);
+                            }}
+                    />
                 </DialogActions>
             </Dialog>
 

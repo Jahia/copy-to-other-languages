@@ -1,0 +1,15 @@
+query($uuid:String!) {
+    jcr {
+        nodeById(uuid: $uuid) {
+            body_en: property(name: "body", language: "en") {
+                value
+            }
+            body_fr: property(name: "body", language: "fr") {
+                value
+            }
+            body_de: property(name: "body", language: "de") {
+                value
+            }
+        }
+    }
+}
