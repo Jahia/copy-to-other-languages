@@ -185,7 +185,7 @@ describe('Test copy to other languages', () => {
         getComponent(Menu).selectByRole('copyToOtherLanguages')
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog')
         getComponentByRole(Button, 'copy-button', dialog).click()
-        dialog.should('not.exist');
+        dialog.should('not.exist')
         checkValues(this.uuid, 'test', 'test', 'test')
     })
 })
