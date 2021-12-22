@@ -10,6 +10,28 @@ function setLanguages(values: string[]) {
     })
 }
 
+function checkValue(value: string, field: any) {
+    if (value) {
+        expect(field).not.to.be.null
+        expect(field.value).to.equal(value)
+    } else {
+        expect(field).to.be.null
+    }
+}
+
+function checkValues(uuid: string, en: string, fr: string, de: string) {
+    cy.apollo({
+        queryFile: 'graphql/jcr/checkPropertyValues.graphql',
+        variables: {
+            uuid: uuid
+        }
+    }).should(({data}) => {
+        checkValue(en, data.jcr.nodeById.body_en);
+        checkValue(fr, data.jcr.nodeById.body_fr);
+        checkValue(de, data.jcr.nodeById.body_de);
+    })
+}
+
 describe('Test copy to other languages', () => {
     before(function () {
         cy.executeGroovy('groovy/admin/deleteSite.groovy', { SITEKEY: 'copyToOtherSite' })
@@ -36,15 +58,12 @@ describe('Test copy to other languages', () => {
             .as('uuid')
 
         cy.login() // edit in chief
-        cy.log('before end')
     })
 
     after(function () {
-        cy.log('after')
         cy.logout()
         cy.visit('/')
         cy.executeGroovy('groovy/admin/deleteSite.groovy', { SITEKEY: 'copyToOtherSite' })
-        cy.log('after end')
     })
 
     beforeEach(() => {
@@ -153,4 +172,21 @@ describe('Test copy to other languages', () => {
         filter.get().type('xx')
         checkboxes.should('have.length', 0)
     })
+
+    it('Should copy to other languages', function () {
+        setLanguages(['en', 'fr', 'de'])
+        checkValues(this.uuid, 'test', null, null);
+
+        cy.visit(`/jahia/content-editor/en/edit/${this.uuid}`)
+
+        const field = getComponentByAttr(BaseComponent, 'data-sel-content-editor-field', 'jnt:mainContent_body')
+        const button = getComponentByRole(Button, 'content-editor/field/3dots', field)
+        button.click()
+        getComponent(Menu).selectByRole('copyToOtherLanguages')
+        const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog')
+        getComponentByRole(Button, 'copy-button', dialog).click()
+
+        checkValues(this.uuid, 'test', 'test', 'test');
+    })
+
 })
