@@ -23,12 +23,12 @@ function checkValues(uuid: string, en: string, fr: string, de: string) {
     cy.apollo({
         queryFile: 'graphql/jcr/checkPropertyValues.graphql',
         variables: {
-            uuid: uuid
-        }
-    }).should(({data}) => {
-        checkValue(en, data.jcr.nodeById.body_en);
-        checkValue(fr, data.jcr.nodeById.body_fr);
-        checkValue(de, data.jcr.nodeById.body_de);
+            uuid: uuid,
+        },
+    }).should(({ data }) => {
+        checkValue(en, data.jcr.nodeById.body_en)
+        checkValue(fr, data.jcr.nodeById.body_fr)
+        checkValue(de, data.jcr.nodeById.body_de)
     })
 }
 
@@ -175,7 +175,7 @@ describe('Test copy to other languages', () => {
 
     it('Should copy to other languages', function () {
         setLanguages(['en', 'fr', 'de'])
-        checkValues(this.uuid, 'test', null, null);
+        checkValues(this.uuid, 'test', null, null)
 
         cy.visit(`/jahia/content-editor/en/edit/${this.uuid}`)
 
@@ -186,7 +186,6 @@ describe('Test copy to other languages', () => {
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog')
         getComponentByRole(Button, 'copy-button', dialog).click()
 
-        checkValues(this.uuid, 'test', 'test', 'test');
+        checkValues(this.uuid, 'test', 'test', 'test')
     })
-
 })
