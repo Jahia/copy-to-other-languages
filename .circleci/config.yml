@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   docker: circleci/docker@0.5.20
   jq: circleci/jq@2.2.0
-  jahia-modules-orb: jahia/jahia-modules-orb@0.8.4
+  jahia-modules-orb: jahia/jahia-modules-orb@0.8.6
 
 parameters:
   TESTS_MANIFEST: # Manifest to be executed by the test container when triggered from an API call
