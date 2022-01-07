@@ -4,13 +4,13 @@
     <parent>
         <artifactId>jahia-modules</artifactId>
         <groupId>org.jahia.modules</groupId>
-        <version>8.0.2.0</version>
+        <version>8.1.0.0</version>
     </parent>
 
-    <groupId>org.jahia.se.modules</groupId>
+    <groupId>org.jahia.modules</groupId>
     <artifactId>copy-to-other-languages</artifactId>
     <name>copy-to-other-languages</name>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <description>copy-to-other-languages</description>
     <scm>
@@ -19,8 +19,10 @@
         <url>https://github.com/Jahia/copy-to-other-languages</url>
       <tag>HEAD</tag>
     </scm>
+
     <properties>
         <yarn.arguments>build:production</yarn.arguments>
+        <jahia-plugin-version>6.0</jahia-plugin-version>
     </properties>
 
     <repositories>
@@ -44,6 +46,11 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Jahia-Depends>content-editor=3.4.0</Jahia-Depends>
+                    </instructions>
+                </configuration>
             </plugin>
 
             <plugin>
