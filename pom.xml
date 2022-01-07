@@ -7,7 +7,7 @@
         <version>8.1.0.0</version>
     </parent>
 
-    <groupId>org.jahia.se.modules</groupId>
+    <groupId>org.jahia.modules</groupId>
     <artifactId>copy-to-other-languages</artifactId>
     <name>copy-to-other-languages</name>
     <version>1.0.0-SNAPSHOT</version>
