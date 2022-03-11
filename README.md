@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/Jahia/copy-to-other-languages/tree/master.svg?style=svg)](https://circleci.com/gh/Jahia/copy-to-other-languages/tree/master)
+[![CircleCI](https://circleci.com/gh/Jahia/copy-to-other-languages/tree/main.svg?style=svg)](https://circleci.com/gh/Jahia/copy-to-other-languages/tree/main)
 ![GitHub tag (latest by version)](https://img.shields.io/github/v/tag/Jahia/copy-to-other-languages?sort=semver)
 ![License](https://img.shields.io/github/license/jahia/copy-to-other-languages)
 
