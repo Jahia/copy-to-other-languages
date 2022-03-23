@@ -31,7 +31,9 @@ const sharedDeps = [
     // DEPRECATED JAHIA PACKAGES
     '@jahia/design-system-kit',
     '@jahia/react-material',
-    '@jahia/icons'
+    '@jahia/icons',
+
+    'formik'
 ];
 
 const singletonDeps = [
@@ -48,7 +50,8 @@ const singletonDeps = [
     '@jahia/ui-extender',
     '@apollo/react-common',
     '@apollo/react-components',
-    '@apollo/react-hooks'
+    '@apollo/react-hooks',
+    'formik'
 ];
 
 const notImported = [];

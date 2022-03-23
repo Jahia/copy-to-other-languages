@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 import {useTranslation} from 'react-i18next';
 import {ComponentRendererContext} from '@jahia/ui-extender';
 import {CopyToOtherLanguages} from './CopyToOtherLanguages';
+import {useFormikContext} from 'formik';
+import {useContentEditorContext} from '@jahia/content-editor';
 
 export const CopyToOtherLanguagesActionComponent = ({
-    formik,
-    editorContext,
     field,
     render: Render,
     loading: Loading,
     ...others
 }) => {
+    const formik = useFormikContext();
+    const editorContext = useContentEditorContext();
     const componentRenderer = useContext(ComponentRendererContext);
 
     // Load namespace
