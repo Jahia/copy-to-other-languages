@@ -29,6 +29,12 @@
       "jahia": "javascript/apps/remoteEntry.js"
     }
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "./node/node ./node/yarn/dist/bin/yarn.js lint --max-warnings 1",
+      "pre-push": " ./node/node ./node/yarn/dist/bin/yarn.js test"
+    }
+  },
   "dependencies": {
     "@apollo/react-hooks": "^3",
     "@jahia/data-helper": "^1.0.3",

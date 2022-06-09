@@ -19,11 +19,11 @@ export const CopyToOtherLanguagesActionComponent = ({
     // Load namespace
     useTranslation('copy-to-other-languages');
 
-    if (!field.i18n || editorContext.mode === 'create' || editorContext.siteInfo.languages.length === 1 || !formik.values[field.name]) {
+    if (!field.i18n || editorContext.siteInfo.languages.length === 1) {
         return false;
     }
 
-    const enabled = !formik.dirty;
+    const enabled = Boolean(formik.values[field.name]);
 
     return (
         <Render
@@ -34,9 +34,11 @@ export const CopyToOtherLanguagesActionComponent = ({
                 componentRenderer.render('copyToOtherLanguages', CopyToOtherLanguages, {
                     path: editorContext.nodeData.path,
                     field: field,
+                    fieldValue: formik.values[field.name],
                     language: editorContext.lang,
                     siteLanguages: editorContext.siteInfo.languages,
                     isOpen: true,
+                    setI18nContext: editorContext.setI18nContext,
                     onClose: () => {
                         componentRenderer.setProperties('copyToOtherLanguages', {isOpen: false});
                     },

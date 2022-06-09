@@ -3,11 +3,11 @@ import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} fr
 import {Button, Checkbox, Input, Typography} from '@jahia/moonstone';
 import {useTranslation} from 'react-i18next';
 import styles from './CopyToOtherLanguages.scss';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
-import {getMutation, getQuery} from './CopyToOtherLanguages.gql';
+import {getQuery} from './CopyToOtherLanguages.gql';
 
-export const CopyToOtherLanguages = ({path, language, siteLanguages, field, isOpen, onExited, onClose}) => {
+export const CopyToOtherLanguages = ({path, language, setI18nContext, siteLanguages, field, fieldValue, isOpen, onExited, onClose}) => {
     const {t} = useTranslation('copy-to-other-languages');
     const [selected, setSelected] = useState([]);
     const [filter, setFilter] = useState('');
@@ -20,41 +20,33 @@ export const CopyToOtherLanguages = ({path, language, siteLanguages, field, isOp
         variables: {path, language, property: field.propertyName}
     });
 
-    const [updateLang] = useMutation(getMutation(allLanguages), {
-        variables: allLanguages.reduce((acc, l) => ({
-            ...acc,
-            [`include_value_${l.language}`]: false,
-            [`include_values_${l.language}`]: false
-        }), {path, property: field.propertyName}),
-        onError: error => {
-            setErrorState(error);
-        },
-        onCompleted: () => {
-            onClose();
-        }
-    });
-
     if (error) {
         console.log(error);
     }
 
+    /**
+     * For each copy-to language, do a deep copy of previous i18nContext
+     * and add field value to the values object in i18nContext
+     * @param selected list of languages to copy to
+     */
     const doCopy = selected => {
-        if (data) {
-            let variables = {
-                language,
-                value: data.jcr.nodeByPath.property.value || '',
-                values: data.jcr.nodeByPath.property.values || []
-            };
-
-            const multiple = (data.jcr.nodeByPath.property.value === null) ? 'values' : 'value';
-            selected.forEach(l => {
-                variables[`include_${multiple}_${l}`] = true;
-            });
-
-            updateLang({
-                variables
-            });
-        }
+        setI18nContext(prev => {
+            prev = prev || {};
+            const result = selected.reduce((acc, lang) => ({
+                ...acc,
+                [lang]: ({
+                    ...prev[lang],
+                    values: {
+                        ...(prev[lang] || {}).values,
+                        [field.name]: fieldValue
+                    },
+                    validation: {
+                        ...(prev[lang] || {}).validation
+                    }
+                })
+            }), {});
+            return result;
+        });
     };
 
     const available = useMemo(() => {
@@ -145,6 +137,7 @@ export const CopyToOtherLanguages = ({path, language, siteLanguages, field, isOp
                             label={t('copy-to-other-languages:label.copy')}
                             onClick={() => {
                                 doCopy(selected);
+                                onClose();
                             }}
                     />
                 </DialogActions>
@@ -177,7 +170,9 @@ CopyToOtherLanguages.propTypes = {
     path: PropTypes.string.isRequired,
     language: PropTypes.string.isRequired,
     siteLanguages: PropTypes.array.isRequired,
+    setI18nContext: PropTypes.func.isRequired,
     field: PropTypes.object.isRequired,
+    fieldValue: PropTypes.string,
     isOpen: PropTypes.bool,
     onExited: PropTypes.func,
     onClose: PropTypes.func
