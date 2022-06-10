@@ -1,1 +1,4 @@
-- sleep: 100
+- installBundle:
+  - 'mvn:org.jahia.modules/content-editor'
+  autoStart: true
+  uninstallPreviousVersion: true
