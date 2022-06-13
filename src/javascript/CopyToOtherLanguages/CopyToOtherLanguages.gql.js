@@ -27,20 +27,3 @@ export function getQuery(allLanguages, path) {
         }
     }`;
 }
-
-export function getMutation(allLanguages) {
-    const setValue = allLanguages.map(l => `value_${l.language}:setValue(language: "${l.language}", value: $value) @include(if: $include_value_${l.language})`);
-    const setValues = allLanguages.map(l => `values_${l.language}:setValues(language: "${l.language}", values: $values) @include(if: $include_values_${l.language})`);
-    const varsDeclaration = allLanguages.map(l => `$include_value_${l.language}: Boolean!, $include_values_${l.language}: Boolean!`).join(',');
-
-    return gql`mutation ($path:String!, $property: String!, $value: String!, $values: [String!], ${varsDeclaration}) {
-        jcr {
-            mutateNode(pathOrId: $path) {
-                mutateProperty(name: $property) {
-                    ${setValue}
-                    ${setValues}
-                }
-            }
-        }
-    }`;
-}

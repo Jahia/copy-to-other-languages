@@ -1,4 +1,6 @@
-import { BaseComponent, Button, getComponent, getComponentByAttr, getComponentByRole, Menu } from '@jahia/cypress'
+import { BaseComponent, Button, getComponent, getComponentByRole, Menu } from '@jahia/cypress'
+import { editPage } from '../page-object/edit.page'
+import { threeDotsButton } from '../page-object/threeDots.button'
 
 function setLanguages(values: string[]) {
     cy.apollo({
@@ -71,35 +73,22 @@ describe('Test copy to other languages', () => {
     })
 
     it('Should not have copyToOtherLanguages if site has a single language', function () {
-        cy.visit(`/jahia/content-editor/en/edit/${this.uuid}`)
-
-        const field = getComponentByAttr(BaseComponent, 'data-sel-content-editor-field', 'jnt:mainContent_body')
-        const button = getComponentByRole(Button, 'content-editor/field/3dots', field, (s) => {
-            expect(s).to.not.exist
-        })
-        button.get()
+        editPage.goTo(this.uuid)
+        threeDotsButton.forField('jnt:mainContent_body', (s) => expect(s).to.not.exist).get()
     })
 
     it('Should not have copyToOtherLanguages if not i18n', function () {
         setLanguages(['en', 'fr', 'de'])
 
-        cy.visit(`/jahia/content-editor/en/edit/${this.uuid}`)
-
-        const field = getComponentByAttr(BaseComponent, 'data-sel-content-editor-field', 'jnt:mainContent_align')
-        const button = getComponentByRole(Button, 'content-editor/field/3dots', field, (s) => {
-            expect(s).to.not.exist
-        })
-        button.get()
+        editPage.goTo(this.uuid)
+        threeDotsButton.forField('jnt:mainContent_align', (s) => expect(s).to.not.exist).get()
     })
 
     it('Should open and close dialog', function () {
         setLanguages(['en', 'fr', 'de'])
 
         cy.visit(`/jahia/content-editor/en/edit/${this.uuid}`)
-
-        const field = getComponentByAttr(BaseComponent, 'data-sel-content-editor-field', 'jnt:mainContent_body')
-        const button = getComponentByRole(Button, 'content-editor/field/3dots', field)
-        button.click()
+        threeDotsButton.forField('jnt:mainContent_body').click()
         getComponent(Menu).selectByRole('copyToOtherLanguages')
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog')
         getComponentByRole(Button, 'cancel-button', dialog).click()
@@ -108,11 +97,8 @@ describe('Test copy to other languages', () => {
     it('Should select/unselect all', function () {
         setLanguages(['en', 'fr', 'de'])
 
-        cy.visit(`/jahia/content-editor/en/edit/${this.uuid}`)
-
-        const field = getComponentByAttr(BaseComponent, 'data-sel-content-editor-field', 'jnt:mainContent_body')
-        const button = getComponentByRole(Button, 'content-editor/field/3dots', field)
-        button.click()
+        editPage.goTo(this.uuid)
+        threeDotsButton.forField('jnt:mainContent_body').click()
         getComponent(Menu).selectByRole('copyToOtherLanguages')
 
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog')
@@ -149,12 +135,9 @@ describe('Test copy to other languages', () => {
     it('Should filter', function () {
         setLanguages(['en', 'fr', 'de'])
 
-        cy.visit(`/jahia/content-editor/en/edit/${this.uuid}`)
+        editPage.goTo(this.uuid)
+        threeDotsButton.forField('jnt:mainContent_body').click()
 
-        const field = getComponentByAttr(BaseComponent, 'data-sel-content-editor-field', 'jnt:mainContent_body')
-        const button = getComponentByRole(Button, 'content-editor/field/3dots', field)
-        button.click()
-        // cy.wait(500)
         getComponent(Menu, null, (e) => {
             expect(e).to.be.visible
         }).selectByRole('copyToOtherLanguages')
@@ -173,19 +156,30 @@ describe('Test copy to other languages', () => {
         checkboxes.should('have.length', 0)
     })
 
-    it('Should copy to other languages', function () {
+    it('Should not copy to other languages without save', function () {
         setLanguages(['en', 'fr', 'de'])
         checkValues(this.uuid, 'test', null, null)
 
-        cy.visit(`/jahia/content-editor/en/edit/${this.uuid}`)
+        editPage.goTo(this.uuid)
+        threeDotsButton.forField('jnt:mainContent_body').click()
+        getComponent(Menu).selectByRole('copyToOtherLanguages')
+        const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog')
 
-        const field = getComponentByAttr(BaseComponent, 'data-sel-content-editor-field', 'jnt:mainContent_body')
-        const button = getComponentByRole(Button, 'content-editor/field/3dots', field)
-        button.click()
+        // click on copy to language without saving; make sure values are still the same
+        getComponentByRole(Button, 'copy-button', dialog).click()
+        checkValues(this.uuid, 'test', null, null)
+    })
+
+    it('Should copy to other languages after save', function () {
+        setLanguages(['en', 'fr', 'de'])
+        checkValues(this.uuid, 'test', null, null)
+
+        editPage.goTo(this.uuid)
+        threeDotsButton.forField('jnt:mainContent_body').click()
         getComponent(Menu).selectByRole('copyToOtherLanguages')
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog')
         getComponentByRole(Button, 'copy-button', dialog).click()
-        dialog.should('not.exist')
+        editPage.save()
         checkValues(this.uuid, 'test', 'test', 'test')
     })
 })
