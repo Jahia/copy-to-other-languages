@@ -45,7 +45,7 @@ export const CopyToOtherLanguages = ({path, language, setI18nContext, siteLangua
                     }
                 })
             }), {});
-            return result;
+            return {...prev, ...result};
         });
     };
 
