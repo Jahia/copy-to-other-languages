@@ -49,7 +49,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Jahia-Depends>content-editor=4.0.0.SNAPSHOT</Jahia-Depends>
+                        <Jahia-Depends>content-editor=4.0.0</Jahia-Depends>
                     </instructions>
                 </configuration>
             </plugin>
