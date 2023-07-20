@@ -164,6 +164,7 @@
             <id>dev</id>
             <properties>
                 <yarn.arguments>webpack</yarn.arguments>
+                <cyclonedx.skip>true</cyclonedx.skip>
             </properties>
         </profile>
     </profiles>
