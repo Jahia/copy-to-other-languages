@@ -19,7 +19,7 @@ export const CopyToOtherLanguagesActionComponent = ({
     // Load namespace
     useTranslation('copy-to-other-languages');
 
-    if (!field.i18n || editorContext.siteInfo.languages.length === 1) {
+    if (!field.i18n || editorContext.siteInfo.languages.length <= 1) {
         return false;
     }
 
