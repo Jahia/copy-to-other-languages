@@ -1,10 +1,10 @@
 import { BaseComponent, Button, getComponent, getComponentByRole, Menu } from '@jahia/cypress'
-import { editPage } from '../page-object/edit.page'
 import { threeDotsButton } from '../page-object/threeDots.button'
+import { JContent } from '../page-object/jcontent'
 
 function setLanguages(values: string[]) {
     cy.apollo({
-        mutationFile: 'graphql/jcr/mutateNode.graphql',
+        mutationFile: 'graphql/jcr/mutation/mutateNode.graphql',
         variables: {
             pathOrId: '/sites/copyToOtherSite',
             properties: [{ name: 'j:languages', values: values }],
@@ -35,19 +35,21 @@ function checkValues(uuid: string, en: string, fr: string, de: string) {
 }
 
 describe('Test copy to other languages', () => {
+    const siteKey = 'copyToOtherSite'
+
     before(function () {
-        cy.executeGroovy('groovy/admin/deleteSite.groovy', { SITEKEY: 'copyToOtherSite' })
+        cy.executeGroovy('groovy/admin/deleteSite.groovy', { SITEKEY: siteKey })
         cy.executeGroovy('groovy/admin/createSite.groovy', {
-            SITEKEY: 'copyToOtherSite',
+            SITEKEY: siteKey,
             TEMPLATES_SET: 'dx-base-demo-templates',
         })
 
         cy.apollo({
-            mutationFile: 'graphql/jcr/addNode.graphql',
+            mutationFile: 'graphql/jcr/mutation/addNode.graphql',
             variables: {
-                parentPathOrId: '/sites/copyToOtherSite/home',
-                nodeName: 'test',
-                nodeType: 'jnt:mainContent',
+                parentPathOrId: `/sites/${siteKey}/home`,
+                name: 'test',
+                primaryNodeType: 'jnt:mainContent',
                 properties: [
                     { name: 'body', language: 'en', value: 'test' },
                     { name: 'align', value: 'left' },
@@ -58,36 +60,40 @@ describe('Test copy to other languages', () => {
                 return data.jcr.addNode.uuid
             })
             .as('uuid')
+    })
 
-        cy.login() // edit in chief
+    beforeEach(() => {
+        cy.loginAndStoreSession()
     })
 
     after(function () {
-        cy.logout()
         cy.visit('/')
         cy.executeGroovy('groovy/admin/deleteSite.groovy', { SITEKEY: 'copyToOtherSite' })
     })
 
-    beforeEach(() => {
-        Cypress.Cookies.preserveOnce('JSESSIONID')
+    afterEach(() => {
+        cy.logout()
     })
 
     it('Should not have copyToOtherLanguages if site has a single language', function () {
-        editPage.goTo(this.uuid)
-        threeDotsButton.forField('jnt:mainContent_body', (s) => expect(s).to.not.exist).get()
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        jcontent.editComponentByText('test').switchToAdvancedMode()
+        threeDotsButton.forField('jnt:mainContent_body', 'not.exist')
     })
 
     it('Should not have copyToOtherLanguages if not i18n', function () {
         setLanguages(['en', 'fr', 'de'])
 
-        editPage.goTo(this.uuid)
-        threeDotsButton.forField('jnt:mainContent_align', (s) => expect(s).to.not.exist).get()
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        jcontent.editComponentByText('test')
+        threeDotsButton.forField('jnt:mainContent_align', 'not.exist')
     })
 
     it('Should open and close dialog', function () {
         setLanguages(['en', 'fr', 'de'])
 
-        cy.visit(`/jahia/content-editor/en/edit/${this.uuid}`)
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        jcontent.editComponentByText('test')
         threeDotsButton.forField('jnt:mainContent_body').click()
         getComponent(Menu).selectByRole('copyToOtherLanguages')
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog')
@@ -97,7 +103,8 @@ describe('Test copy to other languages', () => {
     it('Should select/unselect all', function () {
         setLanguages(['en', 'fr', 'de'])
 
-        editPage.goTo(this.uuid)
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        jcontent.editComponentByText('test')
         threeDotsButton.forField('jnt:mainContent_body').click()
         getComponent(Menu).selectByRole('copyToOtherLanguages')
 
@@ -135,7 +142,8 @@ describe('Test copy to other languages', () => {
     it('Should filter', function () {
         setLanguages(['en', 'fr', 'de'])
 
-        editPage.goTo(this.uuid)
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        jcontent.editComponentByText('test')
         threeDotsButton.forField('jnt:mainContent_body').click()
 
         getComponent(Menu, null, (e) => {
@@ -160,7 +168,8 @@ describe('Test copy to other languages', () => {
         setLanguages(['en', 'fr', 'de'])
         checkValues(this.uuid, 'test', null, null)
 
-        editPage.goTo(this.uuid)
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        jcontent.editComponentByText('test')
         threeDotsButton.forField('jnt:mainContent_body').click()
         getComponent(Menu).selectByRole('copyToOtherLanguages')
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog')
@@ -174,12 +183,13 @@ describe('Test copy to other languages', () => {
         setLanguages(['en', 'fr', 'de'])
         checkValues(this.uuid, 'test', null, null)
 
-        editPage.goTo(this.uuid)
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        const contentEditor = jcontent.editComponentByText('test')
         threeDotsButton.forField('jnt:mainContent_body').click()
         getComponent(Menu).selectByRole('copyToOtherLanguages')
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog')
         getComponentByRole(Button, 'copy-button', dialog).click()
-        editPage.save()
+        contentEditor.save()
         checkValues(this.uuid, 'test', 'test', 'test')
     })
 })
