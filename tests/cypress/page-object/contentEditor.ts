@@ -1,8 +1,4 @@
-import {
-    BasePage,
-    Button,
-    getComponentByRole
-} from '@jahia/cypress'
+import { BasePage, Button, getComponentByRole } from '@jahia/cypress'
 
 export class ContentEditor extends BasePage {
     save() {

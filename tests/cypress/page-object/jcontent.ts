@@ -1,14 +1,7 @@
-import {
-    BasePage,
-    getComponent,
-    getElement,
-    Table,
-    TableRow,
-} from '@jahia/cypress'
+import { BasePage, getComponent, getElement, Table, TableRow } from '@jahia/cypress'
 import { ContentEditor } from './contentEditor'
 
 export class JContent extends BasePage {
-
     static visit(site: string, language: string, path: string): JContent {
         cy.visit(`/jahia/jcontent/${site}/${language}/${path}`)
         return new JContent()
