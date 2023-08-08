@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {ComponentRendererContext} from '@jahia/ui-extender';
 import {CopyToOtherLanguages} from './CopyToOtherLanguages';
 import {useFormikContext} from 'formik';
-import {useContentEditorContext} from '@jahia/content-editor';
+import {useContentEditorContext} from '@jahia/jcontent';
 
 export const CopyToOtherLanguagesActionComponent = ({
     field,
