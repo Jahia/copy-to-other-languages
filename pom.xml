@@ -10,7 +10,7 @@
     <groupId>org.jahia.modules</groupId>
     <artifactId>copy-to-other-languages</artifactId>
     <name>copy-to-other-languages</name>
-    <version>2.1.0-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <description>copy-to-other-languages</description>
     <scm>
@@ -22,8 +22,8 @@
 
     <properties>
         <yarn.arguments>build:production</yarn.arguments>
-        <jahia-depends>content-editor=4.0.0</jahia-depends>
-        <jahia-module-signature>MCwCFFCqibTGdh3m0hnRnEd8HOD52A9tAhRUt0sfDGN3CgAfXKq733KtyFuXBQ==</jahia-module-signature>
+        <jahia-depends>jcontent=3</jahia-depends>
+        <jahia-module-signature>MCwCFCiYxuacx/Hc2aaNOFcnl3OaZtenAhRir9Zt0RXJ419RUNKpXSe2HFNcTQ==</jahia-module-signature>
         <jahia.plugin.version>6.0</jahia.plugin.version>
         <sonar.sources>src/javascript</sonar.sources>
     </properties>
