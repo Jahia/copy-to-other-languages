@@ -76,7 +76,7 @@ describe('Test copy to other languages', () => {
     })
 
     it('Should not have copyToOtherLanguages if site has a single language', function () {
-        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode()
         jcontent.editComponentByText('test').switchToAdvancedMode()
         threeDotsButton.forField('jnt:mainContent_body', 'not.exist')
     })
@@ -84,7 +84,7 @@ describe('Test copy to other languages', () => {
     it('Should not have copyToOtherLanguages if not i18n', function () {
         setLanguages(['en', 'fr', 'de'])
 
-        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode()
         jcontent.editComponentByText('test')
         threeDotsButton.forField('jnt:mainContent_align', 'not.exist')
     })
@@ -92,7 +92,7 @@ describe('Test copy to other languages', () => {
     it('Should open and close dialog', function () {
         setLanguages(['en', 'fr', 'de'])
 
-        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode()
         jcontent.editComponentByText('test')
         threeDotsButton.forField('jnt:mainContent_body').click()
         getComponent(Menu).selectByRole('copyToOtherLanguages')
@@ -103,7 +103,7 @@ describe('Test copy to other languages', () => {
     it('Should select/unselect all', function () {
         setLanguages(['en', 'fr', 'de'])
 
-        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode()
         jcontent.editComponentByText('test')
         threeDotsButton.forField('jnt:mainContent_body').click()
         getComponent(Menu).selectByRole('copyToOtherLanguages')
@@ -142,7 +142,7 @@ describe('Test copy to other languages', () => {
     it('Should filter', function () {
         setLanguages(['en', 'fr', 'de'])
 
-        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode()
         jcontent.editComponentByText('test')
         threeDotsButton.forField('jnt:mainContent_body').click()
 
@@ -168,7 +168,7 @@ describe('Test copy to other languages', () => {
         setLanguages(['en', 'fr', 'de'])
         checkValues(this.uuid, 'test', null, null)
 
-        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode()
         jcontent.editComponentByText('test')
         threeDotsButton.forField('jnt:mainContent_body').click()
         getComponent(Menu).selectByRole('copyToOtherLanguages')
@@ -183,7 +183,7 @@ describe('Test copy to other languages', () => {
         setLanguages(['en', 'fr', 'de'])
         checkValues(this.uuid, 'test', null, null)
 
-        const jcontent = JContent.visit(siteKey, 'en', 'pages/home')
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode()
         const contentEditor = jcontent.editComponentByText('test')
         threeDotsButton.forField('jnt:mainContent_body').click()
         getComponent(Menu).selectByRole('copyToOtherLanguages')
