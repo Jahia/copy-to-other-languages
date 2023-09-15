@@ -27,12 +27,13 @@ jobs:
           module_id: copy-to-other-languages
           testrail_project: Copy to all languages Module
           tests_manifest: provisioning-manifest-snapshot.yml
+          jahia_image: ${{ matrix.jahia_image }}
           should_use_build_artifacts: false
           should_skip_artifacts: true
           should_skip_notifications: false
           should_skip_testrail: false
           should_skip_zencrepes: false
-          github_artifact_name: copy-to-other-languages-standalone-artifacts-${{ github.run_number }}
+          github_artifact_name: ctol-artifacts-${{ strategy.job-index }}-${{ github.run_number }}
           bastion_ssh_private_key: ${{ secrets.BASTION_SSH_PRIVATE_KEY_JAHIACI }}
           jahia_license: ${{ secrets.JAHIA_LICENSE_8X_FULL }}
           docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
