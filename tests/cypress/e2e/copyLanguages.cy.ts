@@ -63,6 +63,10 @@ describe('Test copy to other languages', () => {
     })
 
     beforeEach(() => {
+        cy.apollo({
+            mutationFile: 'graphql/jcr/deployModule.graphql'
+        });
+
         cy.loginAndStoreSession()
     })
 
@@ -76,6 +80,17 @@ describe('Test copy to other languages', () => {
     })
 
     it('Should not have copyToOtherLanguages if site has a single language', function () {
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode()
+        jcontent.editComponentByText('test').switchToAdvancedMode()
+        threeDotsButton.forField('jnt:mainContent_body', 'not.exist')
+    })
+
+    it('Should not have copyToOtherLanguages if module is not deployed', function () {
+        setLanguages(['en', 'fr', 'de'])
+        cy.apollo({
+            mutationFile: 'graphql/jcr/undeployModule.graphql'
+        });
+
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode()
         jcontent.editComponentByText('test').switchToAdvancedMode()
         threeDotsButton.forField('jnt:mainContent_body', 'not.exist')
