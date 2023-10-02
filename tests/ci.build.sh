@@ -11,8 +11,8 @@ if [ ! -d ./artifacts ]; then
   mkdir -p ./artifacts
 fi
 
-if [[ -e ../graphql-dxm-provider/target ]]; then
-  cp -R ../graphql-dxm-provider/target/*-SNAPSHOT.jar ./artifacts/
+if [[ -e ../target ]]; then
+  cp -R ../target/*-SNAPSHOT.jar ./artifacts/
 fi
 
 docker build -t ${TESTS_IMAGE} .

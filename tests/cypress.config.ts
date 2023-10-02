@@ -1,4 +1,4 @@
-import { defineConfig } from 'cypress'
+import {defineConfig} from 'cypress';
 
 export default defineConfig({
     chromeWebSecurity: false,
@@ -6,7 +6,7 @@ export default defineConfig({
     videoUploadOnPasses: false,
     reporter: 'cypress-multi-reporters',
     reporterOptions: {
-        configFile: 'reporter-config.json',
+        configFile: 'reporter-config.json'
     },
     screenshotsFolder: './results/screenshots',
     videosFolder: './results/videos',
@@ -17,9 +17,9 @@ export default defineConfig({
     e2e: {
         setupNodeEvents(on, config) {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
-            return require('./cypress/plugins/index.js')(on, config)
+            return require('./cypress/plugins/index.js')(on, config);
         },
         excludeSpecPattern: '*.ignore.ts',
-        baseUrl: 'http://localhost:8080',
-    },
-})
+        baseUrl: 'http://localhost:8080'
+    }
+});
