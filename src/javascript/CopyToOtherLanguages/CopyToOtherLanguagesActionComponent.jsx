@@ -5,6 +5,7 @@ import {ComponentRendererContext} from '@jahia/ui-extender';
 import {CopyToOtherLanguages} from './CopyToOtherLanguages';
 import {useFormikContext} from 'formik';
 import {useContentEditorContext} from '@jahia/jcontent';
+import {useNodeChecks} from '@jahia/data-helper';
 
 export const CopyToOtherLanguagesActionComponent = ({
     field,
@@ -19,7 +20,18 @@ export const CopyToOtherLanguagesActionComponent = ({
     // Load namespace
     useTranslation('copy-to-other-languages');
 
-    if (!field.i18n || editorContext.siteInfo.languages.length <= 1) {
+    const res = useNodeChecks(
+        {path: editorContext.nodeData.path},
+        {
+            requireModuleInstalledOnSite: ['copy-to-other-languages']
+        }
+    );
+
+    if (res.loading) {
+        return (Loading && <Loading {...others}/>) || false;
+    }
+
+    if (!res.checksResult || !field.i18n || editorContext.siteInfo.languages.length <= 1) {
         return false;
     }
 
