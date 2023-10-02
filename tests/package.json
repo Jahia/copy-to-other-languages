@@ -5,6 +5,7 @@
   "devDependencies": {
     "@4tw/cypress-drag-drop": "^2.2.1",
     "@jahia/cypress": "^3.14.5",
+    "@jahia/eslint-config": "^2.1.2",
     "@jahia/jahia-reporter": "^1.0.30",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
@@ -16,6 +17,7 @@
     "cypress-wait-until": "^1.7.2",
     "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-chai-friendly": "^0.7.2",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-prettier": "^4.0.0",
     "graphql": "^15.5.0",
