@@ -83,7 +83,7 @@ jobs:
           incident_service: copy-to-other-languages-JahiaRL          
           timeout_minutes: 20
           testrail_project: Copy to all languages Module
-          tests_manifest: provisioning-manifest-snapshot.yml
+          tests_manifest: provisioning-manifest-snapshot-rl.yml
           should_use_build_artifacts: false
           should_skip_artifacts: true
           should_skip_notifications: false
