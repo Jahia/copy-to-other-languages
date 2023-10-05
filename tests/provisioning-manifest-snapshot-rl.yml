@@ -1,8 +1,0 @@
-- addMavenRepository: 'https://devtools.jahia.com/nexus/content/groups/internal@id=jahia-internal@snapshots'
-  username: ${env:NEXUS_USERNAME}
-  password: ${env:NEXUS_PASSWORD}
-
-- installBundle:
-  - 'mvn:org.jahia.modules/copy-to-other-languages'
-  autoStart: true
-  uninstallPreviousVersion: true
