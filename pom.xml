@@ -4,7 +4,7 @@
     <parent>
         <artifactId>jahia-modules</artifactId>
         <groupId>org.jahia.modules</groupId>
-        <version>8.1.0.0</version>
+        <version>8.2.0.0-SNAPSHOT</version>
     </parent>
 
     <groupId>org.jahia.modules</groupId>
@@ -24,7 +24,7 @@
         <yarn.arguments>build:production</yarn.arguments>
         <jahia-depends>jcontent=3</jahia-depends>
         <jahia-module-signature>MCwCFCiYxuacx/Hc2aaNOFcnl3OaZtenAhRir9Zt0RXJ419RUNKpXSe2HFNcTQ==</jahia-module-signature>
-        <jahia.plugin.version>6.0</jahia.plugin.version>
+        <jahia.plugin.version>6.9</jahia.plugin.version>
         <sonar.sources>src/javascript</sonar.sources>
     </properties>
 
