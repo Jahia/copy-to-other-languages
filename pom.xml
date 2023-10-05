@@ -24,7 +24,6 @@
         <yarn.arguments>build:production</yarn.arguments>
         <jahia-depends>jcontent=3</jahia-depends>
         <jahia-module-signature>MCwCFCiYxuacx/Hc2aaNOFcnl3OaZtenAhRir9Zt0RXJ419RUNKpXSe2HFNcTQ==</jahia-module-signature>
-        <jahia.plugin.version>6.9</jahia.plugin.version>
         <sonar.sources>src/javascript</sonar.sources>
     </properties>
 
