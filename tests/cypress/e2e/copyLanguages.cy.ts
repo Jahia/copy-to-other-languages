@@ -91,7 +91,6 @@ describe('Test copy to other languages', () => {
             mutationFile: 'graphql/jcr/undeployModule.graphql'
         });
 
-        cy.wait(3000);
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test').switchToAdvancedMode();
         threeDotsButton.forField('jnt:mainContent_body', 'not.exist');
