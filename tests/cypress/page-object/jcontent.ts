@@ -1,7 +1,12 @@
-import {BasePage, Dropdown, getComponent, getComponentByRole, getElement, Table, TableRow} from '@jahia/cypress';
+import {BasePage, Dropdown, getComponent, getComponentByRole, getElement, Table, TableRow, Accordion, SecondaryNav} from '@jahia/cypress';
 import {ContentEditor} from './contentEditor';
+import {CreateContent} from './createContent';
 
 export class JContent extends BasePage {
+
+    secondaryNav: SecondaryNav;
+    accordion: Accordion;
+
     static visit(site: string, language: string, path: string): JContent {
         cy.visit(`/jahia/jcontent/${site}/${language}/${path}`);
         return new JContent();
@@ -29,5 +34,30 @@ export class JContent extends BasePage {
         this.switchToMode('List');
         cy.get('.moonstone-loader', {timeout: 5000}).should('not.exist');
         return this;
+    }
+
+    selectAccordion(accordion: string): JContent {
+        this.getSecondaryNavAccordion().click(accordion);
+        return this;
+    }
+
+    getSecondaryNavAccordion(): Accordion {
+        if (!this.accordion) {
+            this.accordion = getComponent(Accordion, this.getSecondaryNav());
+        }
+
+        return this.accordion;
+    }
+
+    getSecondaryNav(): SecondaryNav {
+        if (!this.secondaryNav) {
+            this.secondaryNav = getComponent(SecondaryNav);
+        }
+
+        return this.secondaryNav;
+    }
+
+    getCreateContent(): CreateContent {
+        return new CreateContent(this);
     }
 }
