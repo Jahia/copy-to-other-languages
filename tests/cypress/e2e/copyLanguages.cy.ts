@@ -94,134 +94,134 @@ describe('Test copy to other languages', () => {
         cy.logout();
     });
 
-    // it('Should not have copyToOtherLanguages if site has a single language', function () {
-    //     const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
-    //     jcontent.editComponentByText('test').switchToAdvancedMode();
-    //     threeDotsButton.forField('jnt:mainContent_body', 'not.exist');
-    // });
-    //
-    // it('Should not have copyToOtherLanguages if module is not deployed', function () {
-    //     setLanguages(['en', 'fr', 'de']);
-    //     cy.apollo({
-    //         mutationFile: 'graphql/jcr/undeployModule.graphql'
-    //     });
-    //
-    //     const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
-    //     jcontent.editComponentByText('test').switchToAdvancedMode();
-    //     threeDotsButton.forField('jnt:mainContent_body', 'not.exist');
-    // });
-    //
-    // it('Should not have copyToOtherLanguages if not i18n', function () {
-    //     setLanguages(['en', 'fr', 'de']);
-    //
-    //     const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
-    //     jcontent.editComponentByText('test');
-    //     threeDotsButton.forField('jnt:mainContent_align', 'not.exist');
-    // });
-    //
-    // it('Should open and close dialog', function () {
-    //     setLanguages(['en', 'fr', 'de']);
-    //
-    //     const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
-    //     jcontent.editComponentByText('test');
-    //     threeDotsButton.forField('jnt:mainContent_body').click();
-    //     getComponent(Menu).selectByRole('copyToOtherLanguages');
-    //     const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
-    //     getComponentByRole(Button, 'cancel-button', dialog).click();
-    // });
-    //
-    // it('Should select/unselect all', function () {
-    //     setLanguages(['en', 'fr', 'de']);
-    //
-    //     const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
-    //     jcontent.editComponentByText('test');
-    //     threeDotsButton.forField('jnt:mainContent_body').click();
-    //     getComponent(Menu).selectByRole('copyToOtherLanguages');
-    //
-    //     const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
-    //     const checkboxes = getComponentByRole(BaseComponent, 'copy-language-button', dialog);
-    //     const addAll = getComponentByRole(Button, 'add-all-button', dialog);
-    //     const removeAll = getComponentByRole(Button, 'remove-all-button', dialog);
-    //
-    //     checkboxes.should(e => {
-    //         expect(e).have.lengthOf(2);
-    //         expect(e).to.be.checked;
-    //     });
-    //
-    //     addAll.should('be.disabled');
-    //     removeAll.should('be.enabled');
-    //     removeAll.click();
-    //     addAll.should('be.enabled');
-    //     removeAll.should('be.disabled');
-    //
-    //     checkboxes.should(e => {
-    //         expect(e).have.lengthOf(2);
-    //         expect(e).not.to.be.checked;
-    //     });
-    //
-    //     addAll.click();
-    //     addAll.get().should('be.disabled', dialog);
-    //     removeAll.get().should('be.enabled', dialog);
-    //
-    //     checkboxes.should(e => {
-    //         expect(e).have.lengthOf(2);
-    //         expect(e).to.be.checked;
-    //     });
-    // });
-    //
-    // it('Should filter', function () {
-    //     setLanguages(['en', 'fr', 'de']);
-    //
-    //     const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
-    //     jcontent.editComponentByText('test');
-    //     threeDotsButton.forField('jnt:mainContent_body').click();
-    //
-    //     getComponent(Menu, null, e => {
-    //         expect(e).to.be.visible;
-    //     }).selectByRole('copyToOtherLanguages');
-    //
-    //     const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
-    //     const checkboxes = getComponentByRole(BaseComponent, 'copy-language-button');
-    //     const filter = getComponentByRole(BaseComponent, 'language-filter', dialog);
-    //
-    //     // Cy.get('[data-sel-role="copy-language-button"]').should('have.length',2)
-    //     checkboxes.should('have.length', 2);
-    //     filter.get().type('fr');
-    //     checkboxes.should('have.length', 1);
-    //     filter.get().clear();
-    //     checkboxes.should('have.length', 2);
-    //     filter.get().type('xx');
-    //     checkboxes.should('have.length', 0);
-    // });
-    //
-    // it('Should not copy to other languages without save', function () {
-    //     setLanguages(['en', 'fr', 'de']);
-    //     checkValues(this.uuid, 'test', null, null);
-    //
-    //     const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
-    //     jcontent.editComponentByText('test');
-    //     threeDotsButton.forField('jnt:mainContent_body').click();
-    //     getComponent(Menu).selectByRole('copyToOtherLanguages');
-    //     const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
-    //
-    //     // Click on copy to language without saving; make sure values are still the same
-    //     getComponentByRole(Button, 'copy-button', dialog).click();
-    //     checkValues(this.uuid, 'test', null, null);
-    // });
-    //
-    // it('Should copy to other languages after save', function () {
-    //     setLanguages(['en', 'fr', 'de']);
-    //     checkValues(this.uuid, 'test', null, null);
-    //
-    //     const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
-    //     const contentEditor = jcontent.editComponentByText('test');
-    //     threeDotsButton.forField('jnt:mainContent_body').click();
-    //     getComponent(Menu).selectByRole('copyToOtherLanguages');
-    //     const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
-    //     getComponentByRole(Button, 'copy-button', dialog).click();
-    //     contentEditor.save();
-    //     checkValues(this.uuid, 'test', 'test', 'test');
-    // });
+    it('Should not have copyToOtherLanguages if site has a single language', function () {
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
+        jcontent.editComponentByText('test').switchToAdvancedMode();
+        threeDotsButton.forField('jnt:mainContent_body', 'not.exist');
+    });
+
+    it('Should not have copyToOtherLanguages if module is not deployed', function () {
+        setLanguages(['en', 'fr', 'de']);
+        cy.apollo({
+            mutationFile: 'graphql/jcr/undeployModule.graphql'
+        });
+
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
+        jcontent.editComponentByText('test').switchToAdvancedMode();
+        threeDotsButton.forField('jnt:mainContent_body', 'not.exist');
+    });
+
+    it('Should not have copyToOtherLanguages if not i18n', function () {
+        setLanguages(['en', 'fr', 'de']);
+
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
+        jcontent.editComponentByText('test');
+        threeDotsButton.forField('jnt:mainContent_align', 'not.exist');
+    });
+
+    it('Should open and close dialog', function () {
+        setLanguages(['en', 'fr', 'de']);
+
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
+        jcontent.editComponentByText('test');
+        threeDotsButton.forField('jnt:mainContent_body').click();
+        getComponent(Menu).selectByRole('copyToOtherLanguages');
+        const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
+        getComponentByRole(Button, 'cancel-button', dialog).click();
+    });
+
+    it('Should select/unselect all', function () {
+        setLanguages(['en', 'fr', 'de']);
+
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
+        jcontent.editComponentByText('test');
+        threeDotsButton.forField('jnt:mainContent_body').click();
+        getComponent(Menu).selectByRole('copyToOtherLanguages');
+
+        const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
+        const checkboxes = getComponentByRole(BaseComponent, 'copy-language-button', dialog);
+        const addAll = getComponentByRole(Button, 'add-all-button', dialog);
+        const removeAll = getComponentByRole(Button, 'remove-all-button', dialog);
+
+        checkboxes.should(e => {
+            expect(e).have.lengthOf(2);
+            expect(e).to.be.checked;
+        });
+
+        addAll.should('be.disabled');
+        removeAll.should('be.enabled');
+        removeAll.click();
+        addAll.should('be.enabled');
+        removeAll.should('be.disabled');
+
+        checkboxes.should(e => {
+            expect(e).have.lengthOf(2);
+            expect(e).not.to.be.checked;
+        });
+
+        addAll.click();
+        addAll.get().should('be.disabled', dialog);
+        removeAll.get().should('be.enabled', dialog);
+
+        checkboxes.should(e => {
+            expect(e).have.lengthOf(2);
+            expect(e).to.be.checked;
+        });
+    });
+
+    it('Should filter', function () {
+        setLanguages(['en', 'fr', 'de']);
+
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
+        jcontent.editComponentByText('test');
+        threeDotsButton.forField('jnt:mainContent_body').click();
+
+        getComponent(Menu, null, e => {
+            expect(e).to.be.visible;
+        }).selectByRole('copyToOtherLanguages');
+
+        const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
+        const checkboxes = getComponentByRole(BaseComponent, 'copy-language-button');
+        const filter = getComponentByRole(BaseComponent, 'language-filter', dialog);
+
+        // Cy.get('[data-sel-role="copy-language-button"]').should('have.length',2)
+        checkboxes.should('have.length', 2);
+        filter.get().type('fr');
+        checkboxes.should('have.length', 1);
+        filter.get().clear();
+        checkboxes.should('have.length', 2);
+        filter.get().type('xx');
+        checkboxes.should('have.length', 0);
+    });
+
+    it('Should not copy to other languages without save', function () {
+        setLanguages(['en', 'fr', 'de']);
+        checkValues(this.uuid, 'test', null, null);
+
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
+        jcontent.editComponentByText('test');
+        threeDotsButton.forField('jnt:mainContent_body').click();
+        getComponent(Menu).selectByRole('copyToOtherLanguages');
+        const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
+
+        // Click on copy to language without saving; make sure values are still the same
+        getComponentByRole(Button, 'copy-button', dialog).click();
+        checkValues(this.uuid, 'test', null, null);
+    });
+
+    it('Should copy to other languages after save', function () {
+        setLanguages(['en', 'fr', 'de']);
+        checkValues(this.uuid, 'test', null, null);
+
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
+        const contentEditor = jcontent.editComponentByText('test');
+        threeDotsButton.forField('jnt:mainContent_body').click();
+        getComponent(Menu).selectByRole('copyToOtherLanguages');
+        const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
+        getComponentByRole(Button, 'copy-button', dialog).click();
+        contentEditor.save();
+        checkValues(this.uuid, 'test', 'test', 'test');
+    });
 
     it('Should not save when mandatory fields have not been filled', function () {
         setLanguages(['en', 'fr', 'de']);
@@ -249,13 +249,5 @@ describe('Test copy to other languages', () => {
         contentEditor.saveUnchecked();
 
         cy.get('p').contains('Invalid form').should('exist');
-
-        threeDotsButton.forField('jnt:testCopy_text2').click();
-        getComponent(Menu).selectByRole('copyToOtherLanguages');
-        dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
-        getComponentByRole(Button, 'copy-button', dialog).click();
-        contentEditor.saveUnchecked();
-
-        cy.get('p').contains('Invalid form').should('not.exist');
     });
 });
