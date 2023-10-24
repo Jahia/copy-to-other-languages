@@ -1,6 +1,8 @@
 import {BaseComponent, Button, getComponent, getComponentByRole, Menu} from '@jahia/cypress';
 import {threeDotsButton} from '../page-object/threeDots.button';
 import {JContent} from '../page-object/jcontent';
+import {ContentEditor} from '../page-object/contentEditor';
+import {SmallTextField} from '../page-object/fields/smallTextField';
 
 function setLanguages(values: string[]) {
     cy.apollo({
@@ -38,11 +40,24 @@ describe('Test copy to other languages', () => {
     const siteKey = 'copyToOtherSite';
 
     before(function () {
+        const fileName = 'modules/ctol-definitions-1.0.0-SNAPSHOT.jar';
+
         cy.executeGroovy('groovy/admin/deleteSite.groovy', {SITEKEY: siteKey});
         cy.executeGroovy('groovy/admin/createSite.groovy', {
             SITEKEY: siteKey,
             TEMPLATES_SET: 'dx-base-demo-templates'
         });
+
+        // Need to wait explicitly for the bundle listener to process event
+        // eslint-disable-next-line
+        cy.runProvisioningScript({ fileContent: '- installAndStartBundle: "' + fileName + '"', type: 'application/yaml' },
+            [{fileName: fileName, type: 'application/java-archive'}]
+        )
+            .then(res => {
+                expect(res.length).to.equal(1);
+                expect(res[0].start[0].message).to.equal('Operation successful');
+            })
+            .wait(3000);
 
         cy.apollo({
             mutationFile: 'graphql/jcr/mutation/addNode.graphql',
@@ -206,5 +221,33 @@ describe('Test copy to other languages', () => {
         getComponentByRole(Button, 'copy-button', dialog).click();
         contentEditor.save();
         checkValues(this.uuid, 'test', 'test', 'test');
+    });
+
+    it('Should not save when mandatory fields have not been filled', function () {
+        setLanguages(['en', 'fr', 'de']);
+
+        JContent.visit(siteKey, 'en', 'content-folders/contents');
+        const jcontent = new JContent();
+        jcontent.selectAccordion('content-folders');
+        jcontent
+            .getCreateContent()
+            .open()
+            .getContentTypeSelector()
+            .selectContentType('Content:Basic')
+            .selectContentType('testCopy')
+            .create();
+
+        const contentEditor = ContentEditor.getContentEditor();
+        let field = contentEditor.getField(SmallTextField, 'jnt:testCopy_text1', false);
+        field.get().type('Test value');
+        field = contentEditor.getField(SmallTextField, 'jnt:testCopy_text2', false);
+        field.get().type('Test value');
+        threeDotsButton.forField('jnt:testCopy_text1').click();
+        getComponent(Menu).selectByRole('copyToOtherLanguages');
+        const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
+        getComponentByRole(Button, 'copy-button', dialog).click();
+        contentEditor.saveUnchecked();
+
+        cy.get('p').contains('Invalid form').should('exist');
     });
 });
