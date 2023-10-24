@@ -3,7 +3,6 @@ import {ContentEditor} from './contentEditor';
 import {CreateContent} from './createContent';
 
 export class JContent extends BasePage {
-
     secondaryNav: SecondaryNav;
     accordion: Accordion;
 

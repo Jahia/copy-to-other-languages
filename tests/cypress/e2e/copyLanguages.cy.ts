@@ -51,13 +51,13 @@ describe('Test copy to other languages', () => {
         // Need to wait explicitly for the bundle listener to process event
         // eslint-disable-next-line
         cy.runProvisioningScript({ fileContent: '- installAndStartBundle: "' + fileName + '"', type: 'application/yaml' },
-            [{ fileName: fileName, type: 'application/java-archive' }],
+            [{fileName: fileName, type: 'application/java-archive'}]
         )
-            .then((res) => {
-                expect(res.length).to.equal(1)
-                expect(res[0].start[0].message).to.equal('Operation successful')
+            .then(res => {
+                expect(res.length).to.equal(1);
+                expect(res[0].start[0].message).to.equal('Operation successful');
             })
-            .wait(3000)
+            .wait(3000);
 
         cy.apollo({
             mutationFile: 'graphql/jcr/mutation/addNode.graphql',
@@ -244,7 +244,7 @@ describe('Test copy to other languages', () => {
         field.get().type('Test value');
         threeDotsButton.forField('jnt:testCopy_text1').click();
         getComponent(Menu).selectByRole('copyToOtherLanguages');
-        let dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
+        const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
         getComponentByRole(Button, 'copy-button', dialog).click();
         contentEditor.saveUnchecked();
 

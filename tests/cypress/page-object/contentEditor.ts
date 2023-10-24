@@ -6,10 +6,9 @@ import {
     getComponentByRole,
     getComponentBySelector
 } from '@jahia/cypress';
-import {Field} from "./fields/field";
+import {Field} from './fields/field';
 
 export class ContentEditor extends BasePage {
-
     static defaultSelector = '[aria-labelledby="dialog-content-editor"]';
 
     static getContentEditor() : ContentEditor {
@@ -27,7 +26,7 @@ export class ContentEditor extends BasePage {
     }
 
     getField<FieldType extends Field>(FieldComponent: ComponentType<FieldType>, fieldName: string,
-                                      multiple?: boolean): FieldType {
+        multiple?: boolean): FieldType {
         const r = getComponentByAttr(FieldComponent, 'data-sel-content-editor-field', fieldName);
         r.fieldName = fieldName;
         r.multiple = multiple;
@@ -37,5 +36,4 @@ export class ContentEditor extends BasePage {
     saveUnchecked() {
         getComponentByRole(Button, 'createButton').click();
     }
-
 }
