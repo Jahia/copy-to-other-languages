@@ -24,7 +24,7 @@ jobs:
       - uses: jahia/jahia-modules-action/integration-tests@v2
         with:
           module_id: copy-to-other-languages
-          jahia_image: jahia/jahia-discovery-dev:8-SNAPSHOT
+          jahia_image: jahia/jahia-ee-dev:8-SNAPSHOT
           incident_service: copy-to-other-languages-JahiaSN         
           timeout_minutes: 20
           testrail_project: Copy to all languages Module
@@ -79,7 +79,7 @@ jobs:
 #      - uses: jahia/jahia-modules-action/integration-tests@v2
 #        with:
 #          module_id: copy-to-other-languages
-#          jahia_image: jahia/jahia-discovery:8
+#          jahia_image: jahia/jahia-ee:8
 #          incident_service: copy-to-other-languages-JahiaRL
 #          timeout_minutes: 20
 #          testrail_project: Copy to all languages Module
