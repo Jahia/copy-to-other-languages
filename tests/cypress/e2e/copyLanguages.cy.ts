@@ -35,10 +35,10 @@ function checkValues(uuid: string, en: string, fr: string, de: string) {
         checkValue(de, data.jcr.nodeById.body_de);
     });
 }
+
 const siteKey = 'copyToOtherSite';
 
 describe('Test copy to other languages', () => {
-
     before(function () {
         const fileName = 'modules/ctol-definitions-1.0.0-SNAPSHOT.jar';
 
