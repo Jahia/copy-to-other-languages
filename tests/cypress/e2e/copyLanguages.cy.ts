@@ -36,9 +36,9 @@ function checkValues(uuid: string, en: string, fr: string, de: string) {
     });
 }
 
-describe('Test copy to other languages', () => {
-    const siteKey = 'copyToOtherSite';
+const siteKey = 'copyToOtherSite';
 
+describe('Test copy to other languages', () => {
     before(function () {
         const fileName = 'modules/ctol-definitions-1.0.0-SNAPSHOT.jar';
 
@@ -86,8 +86,7 @@ describe('Test copy to other languages', () => {
     });
 
     after(function () {
-        cy.visit('/');
-        cy.executeGroovy('groovy/admin/deleteSite.groovy', {SITEKEY: 'copyToOtherSite'});
+        cy.executeGroovy('groovy/admin/deleteSite.groovy', {SITEKEY: siteKey});
     });
 
     afterEach(() => {
