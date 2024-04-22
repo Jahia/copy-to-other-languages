@@ -3,7 +3,7 @@ import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} fr
 import {Button, Checkbox, Input, Typography} from '@jahia/moonstone';
 import {useTranslation} from 'react-i18next';
 import styles from './CopyToOtherLanguages.scss';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/client';
 import PropTypes from 'prop-types';
 import {getQuery} from './CopyToOtherLanguages.gql';
 
