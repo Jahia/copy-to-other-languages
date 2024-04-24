@@ -1,44 +1,53 @@
-import {BaseComponent, Button, getComponent, getComponentByRole, Menu} from '@jahia/cypress';
+import {
+    BaseComponent,
+    Button,
+    deleteSite,
+    disableModule,
+    enableModule,
+    getComponent,
+    getComponentByRole,
+    Menu
+} from '@jahia/cypress';
 import {threeDotsButton} from '../page-object/threeDots.button';
 import {JContent} from '../page-object/jcontent';
 import {ContentEditor} from '../page-object/contentEditor';
 import {SmallTextField} from '../page-object/fields/smallTextField';
 
-function setLanguages(values: string[]) {
-    cy.apollo({
-        mutationFile: 'graphql/jcr/mutation/mutateNode.graphql',
-        variables: {
-            pathOrId: '/sites/copyToOtherSite',
-            properties: [{name: 'j:languages', values: values}]
-        }
-    });
-}
-
-function checkValue(value: string, field: any) {
-    if (value) {
-        expect(field).not.to.be.null;
-        expect(field.value).to.equal(value);
-    } else {
-        expect(field).to.be.null;
-    }
-}
-
-function checkValues(uuid: string, en: string, fr: string, de: string) {
-    cy.apollo({
-        queryFile: 'graphql/jcr/checkPropertyValues.graphql',
-        variables: {
-            uuid: uuid
-        }
-    }).should(({data}) => {
-        checkValue(en, data.jcr.nodeById.body_en);
-        checkValue(fr, data.jcr.nodeById.body_fr);
-        checkValue(de, data.jcr.nodeById.body_de);
-    });
-}
-
-const siteKey = 'copyToOtherSite';
-
 describe('Test copy to other languages', () => {
+    const siteKey = 'copyToOtherSite';
+
+    function setLanguages(values: string[]) {
+        cy.apollo({
+            mutationFile: 'graphql/jcr/mutation/mutateNode.graphql',
+            variables: {
+                pathOrId: `/sites/${siteKey}`,
+                properties: [{name: 'j:languages', values: values}]
+            }
+        });
+    }
+
+    function checkValue(value: string, field: any) {
+        if (value) {
+            expect(field).not.to.be.null;
+            expect(field.value).to.equal(value);
+        } else {
+            expect(field).to.be.null;
+        }
+    }
+
+    function checkValues(uuid: string, en: string, fr: string, de: string) {
+        cy.apollo({
+            queryFile: 'graphql/jcr/checkPropertyValues.graphql',
+            variables: {
+                uuid: uuid
+            }
+        }).should(({data}) => {
+            checkValue(en, data.jcr.nodeById.body_en);
+            checkValue(fr, data.jcr.nodeById.body_fr);
+            checkValue(de, data.jcr.nodeById.body_de);
+        });
+    }
+
     before(function () {
         const fileName = 'modules/ctol-definitions-1.0.0-SNAPSHOT.jar';
 
@@ -78,15 +87,13 @@ describe('Test copy to other languages', () => {
     });
 
     beforeEach(() => {
-        cy.apollo({
-            mutationFile: 'graphql/jcr/deployModule.graphql'
-        });
-
+        enableModule('ctol-definitions', siteKey);
+        enableModule('copy-to-other-languages', siteKey);
         cy.loginAndStoreSession();
     });
 
     after(function () {
-        cy.executeGroovy('groovy/admin/deleteSite.groovy', {SITEKEY: siteKey});
+        deleteSite(siteKey);
     });
 
     afterEach(() => {
@@ -101,9 +108,7 @@ describe('Test copy to other languages', () => {
 
     it('Should not have copyToOtherLanguages if module is not deployed', function () {
         setLanguages(['en', 'fr', 'de']);
-        cy.apollo({
-            mutationFile: 'graphql/jcr/undeployModule.graphql'
-        });
+        disableModule('copy-to-other-languages', siteKey);
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test').switchToAdvancedMode();

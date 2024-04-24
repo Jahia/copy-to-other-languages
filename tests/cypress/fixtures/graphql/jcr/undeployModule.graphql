@@ -1,9 +1,0 @@
-mutation m {
-  jcr {
-    mutateNode(pathOrId: "/sites/copyToOtherSite") {
-      mutateProperty(name: "j:installedModules") {
-        removeValue(value: "copy-to-other-languages")
-      }
-    }
-  }
-}

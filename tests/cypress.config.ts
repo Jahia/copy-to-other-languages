@@ -6,7 +6,7 @@ export default defineConfig({
     pageLoadTimeout: 60000,
     requestTimeout: 60000,
     responseTimeout: 60000,
-    videoUploadOnPasses: false,
+    video: true,
     reporter: 'cypress-multi-reporters',
     reporterOptions: {
         configFile: 'reporter-config.json'
