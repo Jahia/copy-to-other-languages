@@ -23,7 +23,7 @@
     <properties>
         <yarn.arguments>build:production</yarn.arguments>
         <jahia-depends>jcontent=3</jahia-depends>
-        <jahia-module-signature>MCwCFCiYxuacx/Hc2aaNOFcnl3OaZtenAhRir9Zt0RXJ419RUNKpXSe2HFNcTQ==</jahia-module-signature>
+        <jahia-module-signature>MCwCFHekTk+CDX9vk8djMn4j1lNFFggBAhQUywXmWEQMtIXWmpHA8SeT6i/4Pw==</jahia-module-signature>
         <sonar.sources>src/javascript</sonar.sources>
     </properties>
 
