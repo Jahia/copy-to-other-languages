@@ -35,7 +35,7 @@ export const CopyToOtherLanguagesActionComponent = ({
         return false;
     }
 
-    const enabled = Boolean(formik.values[field.name]);
+    const enabled = Boolean(formik.values[field.name]) && !editorContext.nodeData?.lockedAndCannotBeEdited;
 
     return (
         <Render
