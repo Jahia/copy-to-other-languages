@@ -1,6 +1,8 @@
 import {
+    addNode,
     BaseComponent,
     Button,
+    createSite,
     deleteSite,
     disableModule,
     enableModule,
@@ -12,19 +14,10 @@ import {threeDotsButton} from '../page-object/threeDots.button';
 import {JContent} from '../page-object/jcontent';
 import {ContentEditor} from '../page-object/contentEditor';
 import {SmallTextField} from '../page-object/fields/smallTextField';
+import {setLanguages, lockNode, unlockNode} from '../fixtures/utils';
 
 describe('Test copy to other languages', () => {
     const siteKey = 'copyToOtherSite';
-
-    function setLanguages(values: string[]) {
-        cy.apollo({
-            mutationFile: 'graphql/jcr/mutation/mutateNode.graphql',
-            variables: {
-                pathOrId: `/sites/${siteKey}`,
-                properties: [{name: 'j:languages', values: values}]
-            }
-        });
-    }
 
     function checkValue(value: string, field: any) {
         if (value) {
@@ -38,9 +31,7 @@ describe('Test copy to other languages', () => {
     function checkValues(uuid: string, en: string, fr: string, de: string) {
         cy.apollo({
             queryFile: 'graphql/jcr/checkPropertyValues.graphql',
-            variables: {
-                uuid: uuid
-            }
+            variables: {uuid}
         }).should(({data}) => {
             checkValue(en, data.jcr.nodeById.body_en);
             checkValue(fr, data.jcr.nodeById.body_fr);
@@ -49,15 +40,11 @@ describe('Test copy to other languages', () => {
     }
 
     before(function () {
-        const fileName = 'modules/ctol-definitions-1.0.0-SNAPSHOT.jar';
-
-        cy.executeGroovy('groovy/admin/deleteSite.groovy', {SITEKEY: siteKey});
-        cy.executeGroovy('groovy/admin/createSite.groovy', {
-            SITEKEY: siteKey,
-            TEMPLATES_SET: 'dx-base-demo-templates'
-        });
+        deleteSite(siteKey);
+        createSite(siteKey);
 
         // Need to wait explicitly for the bundle listener to process event
+        const fileName = 'modules/ctol-definitions-1.0.0-SNAPSHOT.jar';
         // eslint-disable-next-line
         cy.runProvisioningScript({ fileContent: '- installAndStartBundle: "' + fileName + '"', type: 'application/yaml' },
             [{fileName: fileName, type: 'application/java-archive'}]
@@ -68,22 +55,15 @@ describe('Test copy to other languages', () => {
             })
             .wait(3000);
 
-        cy.apollo({
-            mutationFile: 'graphql/jcr/mutation/addNode.graphql',
-            variables: {
-                parentPathOrId: `/sites/${siteKey}/home`,
-                name: 'test',
-                primaryNodeType: 'jnt:mainContent',
-                properties: [
-                    {name: 'body', language: 'en', value: 'test'},
-                    {name: 'align', value: 'left'}
-                ]
-            }
-        })
-            .then(({data}) => {
-                return data.jcr.addNode.uuid;
-            })
-            .as('uuid');
+        addNode({
+            parentPathOrId: `/sites/${siteKey}/home`,
+            name: 'test',
+            primaryNodeType: 'jnt:mainContent',
+            properties: [
+                {name: 'body', language: 'en', value: 'test'},
+                {name: 'align', value: 'left'}
+            ]
+        }).then(res => res.data.jcr.addNode.uuid).as('uuid');
     });
 
     beforeEach(() => {
@@ -107,7 +87,7 @@ describe('Test copy to other languages', () => {
     });
 
     it('Should not have copyToOtherLanguages if module is not deployed', function () {
-        setLanguages(['en', 'fr', 'de']);
+        setLanguages(siteKey, ['en', 'fr', 'de']);
         disableModule('copy-to-other-languages', siteKey);
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
@@ -116,15 +96,40 @@ describe('Test copy to other languages', () => {
     });
 
     it('Should not have copyToOtherLanguages if not i18n', function () {
-        setLanguages(['en', 'fr', 'de']);
+        setLanguages(siteKey, ['en', 'fr', 'de']);
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
         threeDotsButton.forField('jnt:mainContent_align', 'not.exist');
     });
 
+    it('Should not have copyToOtherLanguages if node is locked', function () {
+        setLanguages(siteKey, ['en', 'fr', 'de']);
+        lockNode(this.uuid);
+
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
+        jcontent.editComponentByText('test');
+        threeDotsButton.forField('jnt:mainContent_body').click();
+        getComponent(Menu).get().find('.moonstone-menuItem')
+            .contains('Copy to other languages')
+            .invoke('attr', 'disabled')
+            .should('eq', 'true');
+    });
+
+    it('Should have copyToOtherLanguages if node is unlocked', function () {
+        setLanguages(siteKey, ['en', 'fr', 'de']);
+        unlockNode(this.uuid);
+
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
+        jcontent.editComponentByText('test');
+        threeDotsButton.forField('jnt:mainContent_body').click();
+        getComponent(Menu).get().find('.moonstone-menuItem')
+            .contains('Copy to other languages')
+            .should('not.have.attr', 'disabled');
+    });
+
     it('Should open and close dialog', function () {
-        setLanguages(['en', 'fr', 'de']);
+        setLanguages(siteKey, ['en', 'fr', 'de']);
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
@@ -135,7 +140,7 @@ describe('Test copy to other languages', () => {
     });
 
     it('Should select/unselect all', function () {
-        setLanguages(['en', 'fr', 'de']);
+        setLanguages(siteKey, ['en', 'fr', 'de']);
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
@@ -174,7 +179,7 @@ describe('Test copy to other languages', () => {
     });
 
     it('Should filter', function () {
-        setLanguages(['en', 'fr', 'de']);
+        setLanguages(siteKey, ['en', 'fr', 'de']);
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
@@ -199,7 +204,7 @@ describe('Test copy to other languages', () => {
     });
 
     it('Should not copy to other languages without save', function () {
-        setLanguages(['en', 'fr', 'de']);
+        setLanguages(siteKey, ['en', 'fr', 'de']);
         checkValues(this.uuid, 'test', null, null);
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
@@ -214,7 +219,7 @@ describe('Test copy to other languages', () => {
     });
 
     it('Should copy to other languages after save', function () {
-        setLanguages(['en', 'fr', 'de']);
+        setLanguages(siteKey, ['en', 'fr', 'de']);
         checkValues(this.uuid, 'test', null, null);
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
@@ -228,7 +233,7 @@ describe('Test copy to other languages', () => {
     });
 
     it('Should not save when mandatory fields have not been filled', function () {
-        setLanguages(['en', 'fr', 'de']);
+        setLanguages(siteKey, ['en', 'fr', 'de']);
 
         JContent.visit(siteKey, 'en', 'content-folders/contents');
         const jcontent = new JContent();
