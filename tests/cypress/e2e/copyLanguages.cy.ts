@@ -3,11 +3,14 @@ import {
     BaseComponent,
     Button,
     createSite,
+    createUser,
     deleteSite,
+    deleteUser,
     disableModule,
     enableModule,
     getComponent,
     getComponentByRole,
+    grantRoles,
     Menu
 } from '@jahia/cypress';
 import {threeDotsButton} from '../page-object/threeDots.button';
@@ -43,6 +46,9 @@ describe('Test copy to other languages', () => {
         deleteSite(siteKey);
         createSite(siteKey);
 
+        createUser('myUser', 'password', [{name: 'preferredLanguage', value: 'en'}]);
+        grantRoles(`/sites/${siteKey}`, ['editor'], 'myUser', 'USER');
+
         // Need to wait explicitly for the bundle listener to process event
         const fileName = 'modules/ctol-definitions-1.0.0-SNAPSHOT.jar';
         // eslint-disable-next-line
@@ -73,6 +79,7 @@ describe('Test copy to other languages', () => {
     });
 
     after(function () {
+        deleteUser('myUser');
         deleteSite(siteKey);
     });
 
@@ -107,13 +114,13 @@ describe('Test copy to other languages', () => {
         setLanguages(siteKey, ['en', 'fr', 'de']);
         lockNode(this.uuid);
 
+        cy.login('myUser', 'password');
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
         threeDotsButton.forField('jnt:mainContent_body').click();
-        getComponent(Menu).get().find('.moonstone-menuItem')
-            .contains('Copy to other languages')
-            .invoke('attr', 'disabled')
-            .should('eq', 'true');
+        getComponent(Menu).get()
+            .find('.moonstone-menuItem[data-sel-role="copyToOtherLanguages"]')
+            .should('have.class', 'moonstone-disabled');
     });
 
     it('Should have copyToOtherLanguages if node is unlocked', function () {
@@ -123,9 +130,9 @@ describe('Test copy to other languages', () => {
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
         threeDotsButton.forField('jnt:mainContent_body').click();
-        getComponent(Menu).get().find('.moonstone-menuItem')
-            .contains('Copy to other languages')
-            .should('not.have.attr', 'disabled');
+        getComponent(Menu).get()
+            .find('.moonstone-menuItem[data-sel-role="copyToOtherLanguages"]')
+            .should('not.have.class', 'moonstone-disabled');
     });
 
     it('Should open and close dialog', function () {
