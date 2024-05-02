@@ -70,8 +70,8 @@ describe('Test copy to other languages', () => {
 
     beforeEach(() => {
         cy.apollo({
-            mutationFile: 'graphql/jcr/deployModule.graphql'
-        });
+            mutationFile: 'graphql/jcr/deployModule.graphql',
+        })
         Cypress.Cookies.preserveOnce('JSESSIONID')
     })
 
