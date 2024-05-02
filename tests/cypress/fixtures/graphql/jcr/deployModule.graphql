@@ -1,0 +1,9 @@
+mutation m {
+    jcr {
+        mutateNode(pathOrId: "/sites/copyToOtherSite") {
+            mutateProperty(name: "j:installedModules") {
+                addValue(value: "copy-to-other-languages")
+            }
+        }
+    }
+}
