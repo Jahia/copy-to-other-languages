@@ -77,7 +77,7 @@ jobs:
           module_id: copy-to-other-languages
           testrail_project: Copy to all languages Module
           tests_manifest: provisioning-manifest-build.yml
-          jahia_image: jahia/jahia-discovery-dev:8-SNAPSHOT
+          jahia_image: jahia/jahia-discovery:8.1
           should_use_build_artifacts: true
           should_skip_testrail: true
           github_artifact_name: copy-to-other-languages-standalone-artifacts-${{ github.run_number }}
