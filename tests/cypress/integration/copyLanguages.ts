@@ -69,10 +69,23 @@ describe('Test copy to other languages', () => {
     })
 
     beforeEach(() => {
+        cy.apollo({
+            mutationFile: 'graphql/jcr/deployModule.graphql',
+        })
         Cypress.Cookies.preserveOnce('JSESSIONID')
     })
 
     it('Should not have copyToOtherLanguages if site has a single language', function () {
+        editPage.goTo(this.uuid)
+        threeDotsButton.forField('jnt:mainContent_body', (s) => expect(s).to.not.exist).get()
+    })
+
+    it('Should not have copyToOtherLanguages if module is not deployed', function () {
+        setLanguages(['en', 'fr', 'de'])
+        cy.apollo({
+            mutationFile: 'graphql/jcr/undeployModule.graphql',
+        })
+
         editPage.goTo(this.uuid)
         threeDotsButton.forField('jnt:mainContent_body', (s) => expect(s).to.not.exist).get()
     })
