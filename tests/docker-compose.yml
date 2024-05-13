@@ -7,6 +7,8 @@ services:
             - SUPER_USER_PASSWORD=${SUPER_USER_PASSWORD}
             - MAX_RAM_PERCENTAGE=95
             - JPDA=true
+            - NEXUS_USERNAME=${NEXUS_USERNAME}
+            - NEXUS_PASSWORD=${NEXUS_PASSWORD}            
         ports:
             - '8000:8000'
             - '8080:8080'
