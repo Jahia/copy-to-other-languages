@@ -22,7 +22,7 @@
 
     <properties>
         <yarn.arguments>build:production</yarn.arguments>
-        <jahia-module-signature>MCwCFB9mx88lJe7Thc7peDhoERmCNJ9qAhR2ZpRGX68M+gsm1R86IwLnqEXk0w==</jahia-module-signature>
+        <jahia-module-signature>MCwCFC1A7h+/UywAtnmyWZj3Ks1DUWZTAhQNdKJPw7rKap+jpCpQ9Sj1Nkr+YQ==</jahia-module-signature>
         <jahia.plugin.version>6.0</jahia.plugin.version>
     </properties>
 
