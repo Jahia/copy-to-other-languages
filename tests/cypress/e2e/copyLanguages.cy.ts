@@ -249,7 +249,7 @@ describe('Test copy to other languages', () => {
             .getCreateContent()
             .open()
             .getContentTypeSelector()
-            .selectContentType('Content:Basic')
+            .selectContentType('Jahia - Basic')
             .selectContentType('testCopy')
             .create();
 
