@@ -1,13 +1,13 @@
-query($uuid:String!) {
+query($uuid:String!, $property:String!="body") {
     jcr {
         nodeById(uuid: $uuid) {
-            body_en: property(name: "body", language: "en") {
+            en: property(name: $property, language: "en") {
                 value
             }
-            body_fr: property(name: "body", language: "fr") {
+            fr: property(name: $property, language: "fr") {
                 value
             }
-            body_de: property(name: "body", language: "de") {
+            de: property(name: $property, language: "de") {
                 value
             }
         }

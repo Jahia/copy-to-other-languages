@@ -22,23 +22,24 @@ import {setLanguages, lockNode, unlockNode} from '../fixtures/utils';
 describe('Test copy to other languages', () => {
     const siteKey = 'copyToOtherSite';
 
-    function checkValue(value: string, field: any) {
-        if (value) {
+    function checkValue(value: string | null, field: any) {
+        if (value === null) {
+            expect(field).to.be.null;
+        } else {
             expect(field).not.to.be.null;
             expect(field.value).to.equal(value);
-        } else {
-            expect(field).to.be.null;
         }
     }
 
-    function checkValues(uuid: string, en: string, fr: string, de: string) {
+    function checkValues({uuid, en, fr, de, property = 'body'}:
+                             {uuid: string, en: string, fr: string, de: string, property?: string}) {
         cy.apollo({
             queryFile: 'graphql/jcr/checkPropertyValues.graphql',
-            variables: {uuid}
+            variables: {uuid, property}
         }).should(({data}) => {
-            checkValue(en, data.jcr.nodeById.body_en);
-            checkValue(fr, data.jcr.nodeById.body_fr);
-            checkValue(de, data.jcr.nodeById.body_de);
+            checkValue(en, data.jcr.nodeById.en);
+            checkValue(fr, data.jcr.nodeById.fr);
+            checkValue(de, data.jcr.nodeById.de);
         });
     }
 
@@ -70,6 +71,17 @@ describe('Test copy to other languages', () => {
                 {name: 'align', value: 'left'}
             ]
         }).then(res => res.data.jcr.addNode.uuid).as('uuid');
+
+        addNode({
+            parentPathOrId: `/sites/${siteKey}/home`,
+            name: 'emptyCopy',
+            primaryNodeType: 'jnt:text',
+            properties: [
+                {name: 'text', language: 'en', value: 'delete me'},
+                {name: 'text', language: 'fr', value: 'delete me'},
+                {name: 'text', language: 'de', value: 'delete me'}
+            ]
+        }).then(res => res.data.jcr.addNode.uuid).as('uuidEmpty');
     });
 
     beforeEach(() => {
@@ -212,7 +224,7 @@ describe('Test copy to other languages', () => {
 
     it('Should not copy to other languages without save', function () {
         setLanguages(siteKey, ['en', 'fr', 'de']);
-        checkValues(this.uuid, 'test', null, null);
+        checkValues({uuid: this.uuid, en: 'test', fr: null, de: null});
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
@@ -222,12 +234,12 @@ describe('Test copy to other languages', () => {
 
         // Click on copy to language without saving; make sure values are still the same
         getComponentByRole(Button, 'copy-button', dialog).click();
-        checkValues(this.uuid, 'test', null, null);
+        checkValues({uuid: this.uuid, en: 'test', fr: null, de: null});
     });
 
     it('Should copy to other languages after save', function () {
         setLanguages(siteKey, ['en', 'fr', 'de']);
-        checkValues(this.uuid, 'test', null, null);
+        checkValues({uuid: this.uuid, en: 'test', fr: null, de: null});
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         const contentEditor = jcontent.editComponentByText('test');
@@ -236,7 +248,25 @@ describe('Test copy to other languages', () => {
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
         getComponentByRole(Button, 'copy-button', dialog).click();
         contentEditor.save();
-        checkValues(this.uuid, 'test', 'test', 'test');
+        checkValues({uuid: this.uuid, en: 'test', fr: 'test', de: 'test'});
+    });
+
+    it('should copy empty fields', function () {
+        setLanguages(siteKey, ['en', 'fr', 'de']);
+        checkValues({uuid: this.uuidEmpty, en: 'delete me', fr: 'delete me', de: 'delete me', property: 'text'});
+
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
+        const contentEditor = jcontent.editComponentByText('delete me');
+        contentEditor.getField(SmallTextField, 'jnt:text_text', false).clear();
+        threeDotsButton.forField('jnt:text_text').click();
+        getComponent(Menu).selectByRole('copyToOtherLanguages');
+
+        const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
+        const addAll = getComponentByRole(Button, 'add-all-button', dialog);
+        addAll.get().invoke('attr', 'disabled').then(disabled => !disabled && addAll.click());
+        getComponentByRole(Button, 'copy-button', dialog).click();
+        contentEditor.save();
+        checkValues({uuid: this.uuidEmpty, en: null, fr: null, de: null, property: 'text'});
     });
 
     it('Should not save when mandatory fields have not been filled', function () {

@@ -22,6 +22,16 @@ export class SmallTextField extends Field {
         return this;
     }
 
+    clear() {
+        if (this.multiple) {
+            this.get().find('input').each($input => {
+                cy.wrap($input).clear();
+            });
+        } else {
+            this.get().find('input').clear();
+        }
+    }
+
     checkValue(expectedValue: string) {
         this.get().find('input').last().should('have.value', expectedValue);
     }
