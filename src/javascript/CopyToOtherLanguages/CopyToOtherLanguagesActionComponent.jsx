@@ -35,7 +35,9 @@ export const CopyToOtherLanguagesActionComponent = ({
         return false;
     }
 
-    const enabled = Boolean(formik.values[field.name]) && !editorContext.nodeData?.lockedAndCannotBeEdited;
+    const enabled = !editorContext.nodeData?.lockedAndCannotBeEdited;
+
+    const fieldValue = formik.values[field.name] ?? '';
 
     return (
         <Render
@@ -46,7 +48,7 @@ export const CopyToOtherLanguagesActionComponent = ({
                 componentRenderer.render('copyToOtherLanguages', CopyToOtherLanguages, {
                     path: editorContext.nodeData.path,
                     field: field,
-                    fieldValue: formik.values[field.name],
+                    fieldValue: fieldValue,
                     language: editorContext.lang,
                     siteLanguages: editorContext.siteInfo.languages,
                     isOpen: true,
