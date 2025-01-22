@@ -24,6 +24,7 @@
         <yarn.arguments>build:production</yarn.arguments>
         <jahia-module-signature>MCwCFFxwDp6AhTv63dMWT72AI5N1BQtVAhRiAoIgOjTcOuAa9zziyUNeUdwM+w==</jahia-module-signature>
         <jahia.plugin.version>6.0</jahia.plugin.version>
+        <jahia-depends>content-editor=4.14.0,graphql-dxm-provider=2.22.0</jahia-depends>
     </properties>
 
     <repositories>
