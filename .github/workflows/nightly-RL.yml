@@ -1,9 +1,7 @@
-# IMPORTANT: This workflow was disabled as release no longer matches selectors used to find elelments
-
 name: Nightly Test run (Jahia RL)
 
 on:
-  workflow_dispatch:  
+  workflow_dispatch:
   schedule:
     - cron:  '0 1 * * *'
 
