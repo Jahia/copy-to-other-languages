@@ -82,6 +82,17 @@ describe('Test copy to other languages', () => {
                 {name: 'text', language: 'de', value: 'delete me'}
             ]
         }).then(res => res.data.jcr.addNode.uuid).as('uuidEmpty');
+
+        addNode({
+            parentPathOrId: `/sites/${siteKey}/home`,
+            name: 'allLanguagesCopy',
+            primaryNodeType: 'jnt:text',
+            properties: [
+                {name: 'text', language: 'en', value: 'copy me'},
+                {name: 'text', language: 'fr', value: 'overwrite me'},
+                {name: 'text', language: 'de', value: 'overwrite me as well'}
+            ]
+        }).then(res => res.data.jcr.addNode.uuid).as('uuidAllLanguages');
     });
 
     beforeEach(() => {
@@ -295,5 +306,22 @@ describe('Test copy to other languages', () => {
         contentEditor.saveUnchecked();
 
         cy.get('p').contains('Invalid form').should('exist');
+    });
+
+    it('Should copy to other languages with all languages', function () {
+        setLanguages(siteKey, ['en', 'fr', 'de']);
+        checkValues({uuid: this.uuidAllLanguages, en: 'copy me', fr: 'overwrite me', de: 'overwrite me as well', property: 'text'});
+
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
+        const contentEditor = jcontent.editComponentByText('copy me');
+        threeDotsButton.forForm().click();
+        getComponent(Menu).selectByRole('copyAllToOtherLanguages');
+
+        const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
+        const addAll = getComponentByRole(Button, 'add-all-button', dialog);
+        addAll.get().invoke('attr', 'disabled').then(disabled => !disabled && addAll.click());
+        getComponentByRole(Button, 'copy-button', dialog).click();
+        contentEditor.save();
+        checkValues({uuid: this.uuidAllLanguages, en: 'copy me', fr: 'copy me', de: 'copy me', property: 'text'});
     });
 });
