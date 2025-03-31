@@ -16,6 +16,8 @@
     "cancel": "Abbrechen",
     "errorTitle": "Operation nicht verfügbar.",
     "errorContent": "Ein Fehler ist aufgetreten beim Kopieren von “{{property}}”. Stellen Sie sicher das der Inhalt nicht gesperrt ist und Sie die notwendigen Rechte besitzen.",
-    "errorContentAllProperties": "Ein Fehler ist aufgetreten beim Kopieren. Stellen Sie sicher, dass der Inhalt nicht gesperrt ist und Sie die notwendigen Rechte besitzen."
+    "errorContentAllProperties": "Ein Fehler ist aufgetreten beim Kopieren. Stellen Sie sicher, dass der Inhalt nicht gesperrt ist und Sie die notwendigen Rechte besitzen.",
+    "warning": "Warnung!",
+    "warningAllProperties": "Warnung: Alle in den folgenden Sprachen ({{languages}}) vorhandenen Eigenschaften werden durch Werte in {{currentLanguage}} ersetzt. Diese Aktion kann nicht rückgängig gemacht werden. Bitte bestätigen Sie Ihre Auswahl."
   }
 }

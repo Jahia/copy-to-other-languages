@@ -47,6 +47,7 @@ export const CopyAllToOtherLanguagesActionComponent = ({
                     language: editorContext.lang,
                     siteLanguages: editorContext.siteInfo.languages,
                     isOpen: true,
+                    isNew: editorContext?.nodeData?.newName !== undefined,
                     setI18nContext: editorContext.setI18nContext,
                     fields: formikContext.values,
                     onClose: () => {

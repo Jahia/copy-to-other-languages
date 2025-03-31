@@ -6,6 +6,7 @@ import styles from './CopyToOtherLanguages.scss';
 import {useQuery} from '@apollo/client';
 import PropTypes from 'prop-types';
 import {getQuery} from './CopyToOtherLanguages.gql';
+import WarningAlert from './WarningAlert';
 
 export const CopyToOtherLanguages = ({
     path,
@@ -16,12 +17,14 @@ export const CopyToOtherLanguages = ({
     fieldValue,
     fields,
     isOpen,
+    isNew,
     onExited,
     onClose}) => {
     const {t} = useTranslation('copy-to-other-languages');
     const [selected, setSelected] = useState([]);
     const [filter, setFilter] = useState('');
     const [errorState, setErrorState] = useState('');
+    const [warningModalShown, setWarningModalShown] = useState(false);
     const isSingleField = !fields;
 
     const allLanguages = useMemo(() => siteLanguages.filter(l => l.language !== language), [siteLanguages, language]);
@@ -74,6 +77,8 @@ export const CopyToOtherLanguages = ({
 
     const filtered = allLanguages.filter(l => !filter || l.language.includes(filter) || l.displayName.includes(filter));
     const filteredAndAvailable = filtered.map(l => l.language).filter(l => available.includes(l));
+    const selectedDisplayNames = filtered.filter(l => selected.includes(l.language)).map(l => l.displayName).join(', ');
+    const currentDisplayName = siteLanguages.find(l => l.language === language)?.displayName;
 
     const title = isSingleField ? t('copy-to-other-languages:label.dialogTitle', {propertyName: field.displayName}) : t('copy-to-other-languages:label.dialogTitleAllProperties');
     const description = isSingleField ? t('copy-to-other-languages:label.dialogDescription') : t('copy-to-other-languages:label.dialogDescriptionAllProperties');
@@ -154,8 +159,12 @@ export const CopyToOtherLanguages = ({
                             data-sel-role="copy-button"
                             label={t('copy-to-other-languages:label.copy')}
                             onClick={() => {
-                                doCopy(selected);
-                                onClose();
+                                if (isNew) {
+                                    setWarningModalShown(true);
+                                } else {
+                                    doCopy(selected);
+                                    onClose();
+                                }
                             }}
                     />
                 </DialogActions>
@@ -180,6 +189,19 @@ export const CopyToOtherLanguages = ({
                     />
                 </DialogActions>
             </Dialog>
+            <WarningAlert
+                languages={selectedDisplayNames}
+                currentLanguage={currentDisplayName}
+                isOpen={warningModalShown}
+                onApply={() => {
+                    doCopy(selected);
+                    setWarningModalShown(false);
+                    onClose();
+                }}
+                onClose={() => {
+                    setWarningModalShown(false);
+                }}
+            />
         </>
     );
 };
@@ -189,6 +211,7 @@ CopyToOtherLanguages.propTypes = {
     language: PropTypes.string.isRequired,
     siteLanguages: PropTypes.array.isRequired,
     setI18nContext: PropTypes.func.isRequired,
+    isNew: PropTypes.bool,
     field: PropTypes.object,
     fieldValue: PropTypes.string,
     fields: PropTypes.object,

@@ -16,6 +16,8 @@
     "cancel": "Annuler",
     "errorTitle": "Erreur",
     "errorContent": "Une erreur s'est produite lors de la copie de {propertyName}. Vérifiez que le contenu n'est pas verrouillé ou que vous disposez des permissions suffisantes.",
-    "errorContentAllProperties": "Une erreur s'est produite lors de la copie. Vérifiez que le contenu n'est pas verrouillé ou que vous disposez des permissions suffisantes."
+    "errorContentAllProperties": "Une erreur s'est produite lors de la copie. Vérifiez que le contenu n'est pas verrouillé ou que vous disposez des permissions suffisantes.",
+    "warning": "Attention!",
+    "warningAllProperties": "Attention: toutes les propriétés existantes dans les langues suivantes ({{languages}}) seront remplacées par les valeurs de la langue {{currentLanguage}}. Cette action ne peut pas être inversée. Merci de confirmer votre choix."
   }
 }

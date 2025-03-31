@@ -16,6 +16,8 @@
     "cancel": "Cancel",
     "errorTitle": "Operation not available.",
     "errorContent": "An error occurred when copying “{{property}}”. Ensure that the content is not locked or that you have sufficient permissions.",
-    "errorContentAllProperties": "An error occurred when copying. Ensure that the content is not locked or that you have sufficient permissions."
+    "errorContentAllProperties": "An error occurred when copying. Ensure that the content is not locked or that you have sufficient permissions.",
+    "warning": "Warning!",
+    "warningAllProperties": "Warning: all properties existing in the following languages ({{languages}}) will be replaced by {{currentLanguage}} values. This action cannot be undone. Please confirm your choice."
   }
 }
