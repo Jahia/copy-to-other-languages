@@ -6,18 +6,32 @@ import styles from './CopyToOtherLanguages.scss';
 import {useQuery} from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import {getQuery} from './CopyToOtherLanguages.gql';
+import WarningAlert from './WarningAlert';
 
-export const CopyToOtherLanguages = ({path, language, setI18nContext, siteLanguages, field, fieldValue, isOpen, onExited, onClose}) => {
+export const CopyToOtherLanguages = ({
+    path,
+    language,
+    setI18nContext,
+    siteLanguages,
+    field,
+    fieldValue,
+    fields,
+    isOpen,
+    isNew,
+    onExited,
+    onClose}) => {
     const {t} = useTranslation('copy-to-other-languages');
     const [selected, setSelected] = useState([]);
     const [filter, setFilter] = useState('');
     const [errorState, setErrorState] = useState('');
+    const [warningModalShown, setWarningModalShown] = useState(false);
+    const isSingleField = !fields;
 
     const allLanguages = useMemo(() => siteLanguages.filter(l => l.language !== language), [siteLanguages, language]);
 
     const {data, error} = useQuery(getQuery(allLanguages, path), {
         errorPolicy: 'ignore',
-        variables: {path, language, property: field.propertyName}
+        variables: {path}
     });
 
     if (error) {
@@ -36,9 +50,12 @@ export const CopyToOtherLanguages = ({path, language, setI18nContext, siteLangua
                 ...acc,
                 [lang]: ({
                     ...prev[lang],
-                    values: {
+                    values: (isSingleField) ? {
                         ...(prev[lang] || {}).values,
                         [field.name]: fieldValue
+                    } : {
+                        ...(prev[lang] || {}).values,
+                        ...fields
                     },
                     validation: {
                         ...(prev[lang] || {}).validation
@@ -60,6 +77,12 @@ export const CopyToOtherLanguages = ({path, language, setI18nContext, siteLangua
 
     const filtered = allLanguages.filter(l => !filter || l.language.includes(filter) || l.displayName.includes(filter));
     const filteredAndAvailable = filtered.map(l => l.language).filter(l => available.includes(l));
+    const selectedDisplayNames = filtered.filter(l => selected.includes(l.language)).map(l => l.displayName).join(', ');
+    const currentDisplayName = siteLanguages.find(l => l.language === language)?.displayName;
+
+    const title = isSingleField ? t('copy-to-other-languages:label.dialogTitle', {propertyName: field.displayName}) : t('copy-to-other-languages:label.dialogTitleAllProperties');
+    const description = isSingleField ? t('copy-to-other-languages:label.dialogDescription') : t('copy-to-other-languages:label.dialogDescriptionAllProperties');
+    const errorDescription = isSingleField ? t('copy-to-other-languages:label.errorContent', {property: field.displayName}) : t('copy-to-other-languages:label.errorContentAllProperties');
 
     return (
         <>
@@ -71,12 +94,12 @@ export const CopyToOtherLanguages = ({path, language, setI18nContext, siteLangua
                     onClose={onClose}
             >
                 <DialogTitle>
-                    {t('copy-to-other-languages:label.dialogTitle', {propertyName: field.displayName})}
+                    {title}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText component="div">
                         <div className={styles.subheading}>
-                            <Typography>{t('copy-to-other-languages:label.dialogDescription')}</Typography>
+                            <Typography>{description}</Typography>
                         </div>
                         <div className={styles.actions}>
                             <Button size="default"
@@ -136,8 +159,12 @@ export const CopyToOtherLanguages = ({path, language, setI18nContext, siteLangua
                             data-sel-role="copy-button"
                             label={t('copy-to-other-languages:label.copy')}
                             onClick={() => {
-                                doCopy(selected);
-                                onClose();
+                                if (isNew) {
+                                    setWarningModalShown(true);
+                                } else {
+                                    doCopy(selected);
+                                    onClose();
+                                }
                             }}
                     />
                 </DialogActions>
@@ -152,7 +179,7 @@ export const CopyToOtherLanguages = ({path, language, setI18nContext, siteLangua
             >
                 <DialogTitle id="alert-dialog-title">{t('copy-to-other-languages:label.errorTitle')}</DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">{t('copy-to-other-languages:label.errorContent', {property: field.displayName})}</DialogContentText>
+                    <DialogContentText id="alert-dialog-description">{errorDescription}</DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button label={t('copy-to-other-languages:label.cancel')}
@@ -162,6 +189,19 @@ export const CopyToOtherLanguages = ({path, language, setI18nContext, siteLangua
                     />
                 </DialogActions>
             </Dialog>
+            <WarningAlert
+                languages={selectedDisplayNames}
+                currentLanguage={currentDisplayName}
+                isOpen={warningModalShown}
+                onApply={() => {
+                    doCopy(selected);
+                    setWarningModalShown(false);
+                    onClose();
+                }}
+                onClose={() => {
+                    setWarningModalShown(false);
+                }}
+            />
         </>
     );
 };
@@ -171,8 +211,10 @@ CopyToOtherLanguages.propTypes = {
     language: PropTypes.string.isRequired,
     siteLanguages: PropTypes.array.isRequired,
     setI18nContext: PropTypes.func.isRequired,
-    field: PropTypes.object.isRequired,
+    isNew: PropTypes.bool,
+    field: PropTypes.object,
     fieldValue: PropTypes.string,
+    fields: PropTypes.object,
     isOpen: PropTypes.bool,
     onExited: PropTypes.func,
     onClose: PropTypes.func
