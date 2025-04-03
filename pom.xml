@@ -22,7 +22,7 @@
 
     <properties>
         <yarn.arguments>build:production</yarn.arguments>
-        <jahia-module-signature>MCwCFBqYIqZ+SB42iZhZ+RoL7D+/dJmNAhQy8qAT31bVeDBe7CvGSIIATdU80Q==</jahia-module-signature>
+        <jahia-module-signature>MCwCFEGdnPCt5bmOka0OzvmTJZ2QSIUdAhR3nQFcEhu94uEtx0GKuTPKCO9Q3Q==</jahia-module-signature>
         <sonar.sources>src/javascript</sonar.sources>
         <jahia-depends>graphql-dxm-provider=3.2.0,jcontent=3.2.0</jahia-depends>
     </properties>
