@@ -321,6 +321,11 @@ describe('Test copy to other languages', () => {
         const addAll = getComponentByRole(Button, 'add-all-button', dialog);
         addAll.get().invoke('attr', 'disabled').then(disabled => !disabled && addAll.click());
         getComponentByRole(Button, 'copy-button', dialog).click();
+
+        const confirmDialog = getComponentByRole(BaseComponent, 'dialog-warningBeforeSave');
+        const confirmButton = getComponentByRole(Button, 'content-type-dialog-apply', confirmDialog);
+        confirmButton.click();
+
         contentEditor.save();
         checkValues({uuid: this.uuidAllLanguages, en: 'copy me', fr: 'copy me', de: 'copy me', property: 'text'});
     });
