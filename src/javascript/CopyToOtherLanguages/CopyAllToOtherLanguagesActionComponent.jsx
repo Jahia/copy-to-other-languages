@@ -1,9 +1,9 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {useTranslation} from 'react-i18next';
 import {ComponentRendererContext} from '@jahia/ui-extender';
 import {CopyToOtherLanguages} from './CopyToOtherLanguages';
-import {useContentEditorContext} from '@jahia/jcontent';
+import {useContentEditorContext, useContentEditorSectionContext} from '@jahia/content-editor';
 import {useNodeChecks} from '@jahia/data-helper';
 import {useFormikContext} from 'formik';
 
@@ -13,6 +13,7 @@ export const CopyAllToOtherLanguagesActionComponent = ({
     ...others
 }) => {
     const editorContext = useContentEditorContext();
+    const editorSectionContext = useContentEditorSectionContext();
     const formikContext = useFormikContext();
     const componentRenderer = useContext(ComponentRendererContext);
 
@@ -25,6 +26,23 @@ export const CopyAllToOtherLanguagesActionComponent = ({
             requireModuleInstalledOnSite: ['copy-to-other-languages']
         }
     );
+
+    const fields = useMemo(() => {
+        const fieldNames = editorSectionContext.sections.flatMap(section =>
+            section.fieldSets.flatMap(fieldset =>
+                fieldset.fields
+                    .filter(field =>
+                        field?.i18n === true &&
+                        field?.readOnly === false &&
+                        field?.name !== undefined
+                    )
+                    .map(field => field.name)
+            )
+        );
+        return Object.fromEntries(
+            fieldNames.map(name => [name, formikContext.values[name] ?? ''])
+        );
+    }, [editorSectionContext.sections, formikContext.values]);
 
     if (res.loading) {
         return (Loading && <Loading {...others}/>) || false;
@@ -49,7 +67,7 @@ export const CopyAllToOtherLanguagesActionComponent = ({
                     isOpen: true,
                     isNew: editorContext?.nodeData?.newName !== undefined,
                     setI18nContext: editorContext.setI18nContext,
-                    fields: formikContext.values,
+                    fields,
                     onClose: () => {
                         componentRenderer.setProperties('copyAllToOtherLanguages', {isOpen: false});
                     },

@@ -46,6 +46,13 @@ export const CopyToOtherLanguages = ({
     const doCopy = selected => {
         setI18nContext(prev => {
             prev = prev || {};
+            if (Object.hasOwn(prev, language)) {
+                // If we do multiple copy to languages in a row
+                // then old values will be saved in i18nContext
+                // and rewritten back to formik
+                delete prev[language];
+            }
+
             const result = selected.reduce((acc, lang) => ({
                 ...acc,
                 [lang]: ({
@@ -159,11 +166,11 @@ export const CopyToOtherLanguages = ({
                             data-sel-role="copy-button"
                             label={t('copy-to-other-languages:label.copy')}
                             onClick={() => {
-                                if (isNew) {
-                                    setWarningModalShown(true);
-                                } else {
+                                if (isNew || isSingleField) {
                                     doCopy(selected);
                                     onClose();
+                                } else {
+                                    setWarningModalShown(true);
                                 }
                             }}
                     />
