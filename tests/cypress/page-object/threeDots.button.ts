@@ -9,8 +9,8 @@ class ThreeDotsButton {
     }
 
     forForm() {
-        const form = getComponentByAttr(BaseComponent, 'role', 'dialog');
-        return getComponentByRole(Button, ThreeDotsButton.roleName, form);
+        const form = getComponentByAttr(BaseComponent, 'role', 'dialog')
+        return getComponentByRole(Button, ThreeDotsButton.roleName, form)
     }
 }
 
