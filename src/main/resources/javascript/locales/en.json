@@ -1,10 +1,13 @@
 {
   "label": {
     "action": "Copy to other languages",
+    "actionAllProperties": "Copy all properties to other languages",
     "dialogTitle": "Copy “{{propertyName}}” to other languages",
+    "dialogTitleAllProperties": "Copy all properties to other languages",
     "languagesSelected": "{{count}} language selected",
     "languagesSelected_plural": "{{count}} languages selected",
     "dialogDescription": "The value of this field will be copied to all other languages, overwriting the current values.",
+    "dialogDescriptionAllProperties": "The values of all properties will be copied to all other languages, overwriting the current values.",
     "filterLanguages": "Filter languages",
     "noResults": "No results",
     "addAll": "Add all",
@@ -13,6 +16,9 @@
     "copy": "Copy",
     "cancel": "Cancel",
     "errorTitle": "Operation not available.",
-    "errorContent": "An error occurred when copying “{{property}}”. Ensure that the content is not locked or that you have sufficient permissions."
+    "errorContent": "An error occurred when copying “{{property}}”. Ensure that the content is not locked or that you have sufficient permissions.",
+    "errorContentAllProperties": "An error occurred when copying. Ensure that the content is not locked or that you have sufficient permissions.",
+    "warning": "Warning!",
+    "warningAllProperties": "Warning: all properties existing in the following languages ({{languages}}) will be replaced by {{currentLanguage}} values. This action cannot be undone. Please confirm your choice."
   }
 }

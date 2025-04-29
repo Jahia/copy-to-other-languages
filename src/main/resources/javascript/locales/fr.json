@@ -1,10 +1,13 @@
 {
   "label": {
     "action": "Copier dans d’autres langues",
+    "actionAllProperties": "Copier toutes les propriétés dans d'autres langues",
     "dialogTitle": "Copier “{{propertyName}}” dans d’autres langues",
+    "dialogTitleAllProperties": "Copier toutes les propriétés dans d'autres langues",
     "languagesSelected": "{{count}} langue sélectionnée",
     "languagesSelected_plural": "{{count}} langues sélectionnées",
     "dialogDescription": "La valeur de ce champ sera copiée dans les autres langues, écrasant les valeurs actuelles.",
+    "dialogDescriptionAllProperties": "Les valeurs de toutes les propriétés seront copiées dans toutes les autres langues, écrasant les valeurs actuelles.",
     "filterLanguages": "Filtrer les langues",
     "noResults": "Aucun résultat",
     "addAll": "Ajouter tout",
@@ -13,6 +16,9 @@
     "copy": "Copier",
     "cancel": "Annuler",
     "errorTitle": "Erreur",
-    "errorContent": "Une erreur s'est produite lors de la copie de {propertyName}. Vérifiez que le contenu n'est pas verrouillé ou que vous disposez des permissions suffisantes."
+    "errorContent": "Une erreur s'est produite lors de la copie de {propertyName}. Vérifiez que le contenu n'est pas verrouillé ou que vous disposez des permissions suffisantes.",
+    "errorContentAllProperties": "Une erreur s'est produite lors de la copie. Vérifiez que le contenu n'est pas verrouillé ou que vous disposez des permissions suffisantes.",
+    "warning": "Attention!",
+    "warningAllProperties": "Attention: toutes les propriétés existantes dans les langues suivantes ({{languages}}) seront remplacées par les valeurs de la langue {{currentLanguage}}. Cette action ne peut pas être inversée. Merci de confirmer votre choix."
   }
 }
