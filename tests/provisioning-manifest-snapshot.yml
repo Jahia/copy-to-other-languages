@@ -1,5 +1,5 @@
 - installBundle:
-  - 'mvn:org.jahia.modules/graphql-dxm-provider/2.22.0-SNAPSHOT'
+  - 'mvn:org.jahia.modules/graphql-dxm-provider/2.22.0'
   - 'mvn:org.jahia.modules/content-editor'
   - 'mvn:org.jahia.modules/copy-to-other-languages/2.3.0-SNAPSHOT'
   autoStart: true
