@@ -1,3 +1,6 @@
+- addMavenRepository: 'https://store.jahia.com/nexus/content/repositories/jahia-public-app-store@id=JahiaStore'
+- addMavenRepository: 'https://devtools.jahia.com/nexus/content/groups/public/@snapshots@noreleases@id=JahiaSnapshot'
+
 - installBundle:
   - 'mvn:org.jahia.modules/graphql-dxm-provider/2.22.0'
   - 'mvn:org.jahia.modules/content-editor'
