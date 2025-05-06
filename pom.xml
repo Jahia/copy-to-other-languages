@@ -4,7 +4,7 @@
     <parent>
         <artifactId>jahia-modules</artifactId>
         <groupId>org.jahia.modules</groupId>
-        <version>8.1.3.0</version>
+        <version>8.1.6.0</version>
     </parent>
 
     <groupId>org.jahia.modules</groupId>
@@ -23,7 +23,7 @@
     <properties>
         <yarn.arguments>build:production</yarn.arguments>
         <jahia-module-signature>MCwCFFmvTcatGzfioGl5MzU7ByXaa65aAhQv56+v8s3a9aKVa5FPPYXzLp8pkw==</jahia-module-signature>
-        <jahia.plugin.version>6.0</jahia.plugin.version>
+        <jahia.plugin.version>6.9</jahia.plugin.version>
         <jahia-depends>content-editor=4.15.1,graphql-dxm-provider=2.22.0</jahia-depends>
     </properties>
 
@@ -46,7 +46,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.4.1</version>
                 <configuration>
                     <filesets>
                         <fileset>
@@ -61,7 +61,7 @@
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.6</version>
+                <version>1.15.1</version>
                 <!-- executions go here -->
                 <executions>
                     <execution>
@@ -71,8 +71,8 @@
                             <goal>install-node-and-yarn</goal>
                         </goals>
                         <configuration>
-                            <nodeVersion>v18.18.0</nodeVersion>
-                            <yarnVersion>v1.22.10</yarnVersion>
+                            <nodeVersion>v22.13.1</nodeVersion>
+                            <yarnVersion>v1.22.22</yarnVersion>
                         </configuration>
                     </execution>
                     <execution>
