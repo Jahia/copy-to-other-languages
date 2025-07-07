@@ -314,8 +314,8 @@ describe('Test copy to other languages', () => {
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         const contentEditor = jcontent.editComponentByText('copy me');
-        threeDotsButton.forForm().click();
-        getComponent(Menu).selectByRole('copyAllToOtherLanguages');
+
+        cy.get('button[data-sel-role=\'copyAllToOtherLanguages\']').click();
 
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
         const addAll = getComponentByRole(Button, 'add-all-button', dialog);
