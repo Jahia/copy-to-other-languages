@@ -8,12 +8,9 @@ import {
     deleteUser,
     disableModule,
     enableModule,
-    getComponent,
     getComponentByRole,
     grantRoles,
-    Menu
 } from '@jahia/cypress';
-import {threeDotsButton} from '../page-object/threeDots.button';
 import {JContent} from '../page-object/jcontent';
 import {ContentEditor} from '../page-object/contentEditor';
 import {SmallTextField} from '../page-object/fields/smallTextField';
@@ -113,7 +110,7 @@ describe('Test copy to other languages', () => {
     it('Should not have copyToOtherLanguages if site has a single language', function () {
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test').switchToAdvancedMode();
-        threeDotsButton.forField('jnt:mainContent_body', 'not.exist');
+        cy.get('button[data-sel-role="copyAllToOtherLanguages"]').should('not.exist');
     });
 
     it('Should not have copyToOtherLanguages if module is not deployed', function () {
@@ -122,7 +119,7 @@ describe('Test copy to other languages', () => {
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test').switchToAdvancedMode();
-        threeDotsButton.forField('jnt:mainContent_body', 'not.exist');
+        cy.get('button[data-sel-role="copyAllToOtherLanguages"]').should('not.exist');
     });
 
     it('Should not have copyToOtherLanguages if not i18n', function () {
@@ -130,7 +127,7 @@ describe('Test copy to other languages', () => {
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
-        threeDotsButton.forField('jnt:mainContent_align', 'not.exist');
+        cy.get('button[data-sel-role="copyAllToOtherLanguages"]').should('not.exist');
     });
 
     it('Should not have copyToOtherLanguages if node is locked', function () {
@@ -140,10 +137,7 @@ describe('Test copy to other languages', () => {
         cy.login('myUser', 'password');
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
-        threeDotsButton.forField('jnt:mainContent_body').click();
-        getComponent(Menu).get()
-            .find('.moonstone-menuItem[data-sel-role="copyToOtherLanguages"]')
-            .should('have.class', 'moonstone-disabled');
+        cy.get('button[data-sel-role="copyAllToOtherLanguages"]').should('be.disabled');
     });
 
     it('Should have copyToOtherLanguages if node is unlocked', function () {
@@ -152,10 +146,7 @@ describe('Test copy to other languages', () => {
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
-        threeDotsButton.forField('jnt:mainContent_body').click();
-        getComponent(Menu).get()
-            .find('.moonstone-menuItem[data-sel-role="copyToOtherLanguages"]')
-            .should('not.have.class', 'moonstone-disabled');
+        cy.get('button[data-sel-role="copyAllToOtherLanguages"]').should('not.be.disabled');
     });
 
     it('Should open and close dialog', function () {
@@ -163,8 +154,7 @@ describe('Test copy to other languages', () => {
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
-        threeDotsButton.forField('jnt:mainContent_body').click();
-        getComponent(Menu).selectByRole('copyToOtherLanguages');
+        cy.get('button[data-sel-role="copyAllToOtherLanguages"]').click();
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
         getComponentByRole(Button, 'cancel-button', dialog).click();
     });
@@ -174,8 +164,7 @@ describe('Test copy to other languages', () => {
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
-        threeDotsButton.forField('jnt:mainContent_body').click();
-        getComponent(Menu).selectByRole('copyToOtherLanguages');
+        cy.get('button[data-sel-role="copyAllToOtherLanguages"]').click();
 
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
         const checkboxes = getComponentByRole(BaseComponent, 'copy-language-button', dialog);
@@ -213,11 +202,7 @@ describe('Test copy to other languages', () => {
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
-        threeDotsButton.forField('jnt:mainContent_body').click();
-
-        getComponent(Menu, null, e => {
-            expect(e).to.be.visible;
-        }).selectByRole('copyToOtherLanguages');
+        cy.get('button[data-sel-role="copyAllToOtherLanguages"]').click();
 
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
         const checkboxes = getComponentByRole(BaseComponent, 'copy-language-button');
@@ -239,8 +224,7 @@ describe('Test copy to other languages', () => {
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         jcontent.editComponentByText('test');
-        threeDotsButton.forField('jnt:mainContent_body').click();
-        getComponent(Menu).selectByRole('copyToOtherLanguages');
+        cy.get('button[data-sel-role="copyAllToOtherLanguages"]').click();
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
 
         // Click on copy to language without saving; make sure values are still the same
@@ -254,8 +238,8 @@ describe('Test copy to other languages', () => {
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         const contentEditor = jcontent.editComponentByText('test');
-        threeDotsButton.forField('jnt:mainContent_body').click();
-        getComponent(Menu).selectByRole('copyToOtherLanguages');
+        cy.get('button[data-sel-role="copyAllToOtherLanguages"]').click();
+
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
         getComponentByRole(Button, 'copy-button', dialog).click();
         contentEditor.save();
@@ -269,8 +253,7 @@ describe('Test copy to other languages', () => {
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         const contentEditor = jcontent.editComponentByText('delete me');
         contentEditor.getField(SmallTextField, 'jnt:text_text', false).clear();
-        threeDotsButton.forField('jnt:text_text').click();
-        getComponent(Menu).selectByRole('copyToOtherLanguages');
+        cy.get('button[data-sel-role="copyAllToOtherLanguages"]').click();
 
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
         const addAll = getComponentByRole(Button, 'add-all-button', dialog);
@@ -299,8 +282,8 @@ describe('Test copy to other languages', () => {
         field.get().type('Test value');
         field = contentEditor.getField(SmallTextField, 'jnt:testCopy_text2', false);
         field.get().type('Test value');
-        threeDotsButton.forField('jnt:testCopy_text1').click();
-        getComponent(Menu).selectByRole('copyToOtherLanguages');
+        cy.get('button[data-sel-role="copyAllToOtherLanguages"]').click();
+
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
         getComponentByRole(Button, 'copy-button', dialog).click();
         contentEditor.saveUnchecked();
@@ -314,8 +297,7 @@ describe('Test copy to other languages', () => {
 
         const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
         const contentEditor = jcontent.editComponentByText('copy me');
-        threeDotsButton.forForm().click();
-        getComponent(Menu).selectByRole('copyAllToOtherLanguages');
+        cy.get('button[data-sel-role="copyAllToOtherLanguages"]').click();
 
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
         const addAll = getComponentByRole(Button, 'add-all-button', dialog);
