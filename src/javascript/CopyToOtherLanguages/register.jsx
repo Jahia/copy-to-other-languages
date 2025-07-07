@@ -1,6 +1,6 @@
 import React from 'react';
 import {registry} from '@jahia/ui-extender';
-import {Lock} from '@jahia/moonstone';
+import {Copy, Lock} from '@jahia/moonstone';
 import {CopyToOtherLanguagesActionComponent} from './CopyToOtherLanguagesActionComponent';
 import {CopyAllToOtherLanguagesActionComponent} from './CopyAllToOtherLanguagesActionComponent';
 
@@ -12,6 +12,7 @@ export default () => {
         component: CopyToOtherLanguagesActionComponent
     });
     registry.add('action', 'copyAllToOtherLanguages', {
+        buttonIcon: <Copy/>,
         buttonLabel: 'copy-to-other-languages:label.actionAllProperties',
         targets: ['content-editor/header/3dots:5.5'],
         component: CopyAllToOtherLanguagesActionComponent
