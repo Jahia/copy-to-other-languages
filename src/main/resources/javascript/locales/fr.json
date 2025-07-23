@@ -1,7 +1,7 @@
 {
   "label": {
-    "action": "Copier vers d’autres langues",
-    "actionAllProperties": "Copier toutes les valeurs vers...",
+    "action": "Copier ce champs vers...",
+    "actionAllProperties": "Copier tous les champs vers...",
     "dialogTitle": "Copier “{{propertyName}}” vers d'autres langues",
     "dialogTitleAllProperties": "Copier toutes les propriétés vers d'autres langues",
     "languagesSelected": "{{count}} langue sélectionnée",
