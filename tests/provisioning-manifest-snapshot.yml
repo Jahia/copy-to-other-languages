@@ -1,7 +1,7 @@
 - addMavenRepository: 'https://store.jahia.com/nexus/content/repositories/jahia-public-app-store@id=JahiaStore'
 - addMavenRepository: 'https://devtools.jahia.com/nexus/content/groups/public/@snapshots@noreleases@id=JahiaSnapshot'
 
-- addMavenRepository: 'https://devtools.jahia.com/nexus/content/groups/internal@id=jahia-internal@snapshots'
+- addMavenRepository: 'https://devtools.jahia.com/nexus/content/groups/internal/@id=jahia-internal@snapshots'
   username: ${env:NEXUS_USERNAME}
   password: ${env:NEXUS_PASSWORD}
 
@@ -36,7 +36,7 @@
   do:
     - uninstallBundle: 'mvn:org.jahia.modules/content-editor/3.6.0'
 
-- installBundle: 
+- installBundle:
   - 'mvn:org.jahia.modules/jcontent'
   - 'mvn:org.jahia.modules/site-settings-seo'
   - 'mvn:org.jahia.modules/copy-to-other-languages'
