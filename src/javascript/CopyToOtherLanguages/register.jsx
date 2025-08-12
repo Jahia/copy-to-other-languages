@@ -14,7 +14,7 @@ export default () => {
     registry.add('action', 'copyAllToOtherLanguages', {
         buttonIcon: <Copy/>,
         buttonLabel: 'copy-to-other-languages:label.actionAllProperties',
-        targets: ['content-editor/header/3dots:5.5'],
+        targets: ['content-editor/header/3dots:5.5', 'translate/header/3dots:5.5'],
         component: CopyAllToOtherLanguagesActionComponent
     });
 };
