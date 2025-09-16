@@ -19,7 +19,6 @@ export const CopyAllToOtherLanguagesActionComponent = ({
 
     // Load namespace
     useTranslation('copy-to-other-languages');
-
     const res = useNodeChecks(
         {path: editorContext.nodeData.path},
         {
@@ -48,16 +47,12 @@ export const CopyAllToOtherLanguagesActionComponent = ({
         return (Loading && <Loading {...others}/>) || false;
     }
 
-    if (!res.checksResult || editorContext.siteInfo.languages.length <= 1) {
-        return false;
-    }
-
     const enabled = !editorContext.nodeData?.lockedAndCannotBeEdited;
 
     return (
         <Render
             {...others}
-            isVisible
+            isVisible={res.checksResult && editorContext.siteInfo.languages.length > 1}
             enabled={enabled}
             onClick={() => {
                 componentRenderer.render('copyAllToOtherLanguages', CopyToOtherLanguages, {

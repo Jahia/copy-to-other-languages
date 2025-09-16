@@ -31,10 +31,6 @@ export const CopyToOtherLanguagesActionComponent = ({
         return (Loading && <Loading {...others}/>) || false;
     }
 
-    if (!res.checksResult || !field.i18n || editorContext.siteInfo.languages.length <= 1) {
-        return false;
-    }
-
     const enabled = !editorContext.nodeData?.lockedAndCannotBeEdited;
 
     const fieldValue = formik.values[field.name] ?? '';
@@ -42,7 +38,7 @@ export const CopyToOtherLanguagesActionComponent = ({
     return (
         <Render
             {...others}
-            isVisible
+            isVisible={field.i18n && editorContext.siteInfo.languages.length > 1 && res.checksResult}
             enabled={enabled}
             onClick={() => {
                 componentRenderer.render('copyToOtherLanguages', CopyToOtherLanguages, {
