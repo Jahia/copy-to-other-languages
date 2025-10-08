@@ -10,14 +10,14 @@
     <groupId>org.jahia.modules</groupId>
     <artifactId>copy-to-other-languages</artifactId>
     <name>copy-to-other-languages</name>
-    <version>2.4.0</version>
+    <version>2.5.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <description>copy-to-other-languages</description>
     <scm>
         <connection>scm:git:git@github.com:Jahia/copy-to-other-languages.git</connection>
         <developerConnection>scm:git:git@github.com:Jahia/copy-to-other-languages.git</developerConnection>
         <url>https://github.com/Jahia/copy-to-other-languages</url>
-      <tag>2_4_0</tag>
+      <tag>HEAD</tag>
     </scm>
 
     <properties>
