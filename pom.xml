@@ -21,7 +21,7 @@
     </scm>
 
     <properties>
-        <yarn.arguments>build:production</yarn.arguments>
+        <yarn.arguments>build</yarn.arguments>
         <jahia-module-signature>MC0CFQCI80hQ9Dug4WJp7Kiz62pIarTWuAIUJLUHYXdVy7EansuTy4kskyRZAds=</jahia-module-signature>
         <sonar.sources>src/javascript</sonar.sources>
         <jahia-depends>graphql-dxm-provider=3.2.0,jcontent=3.2.0</jahia-depends>

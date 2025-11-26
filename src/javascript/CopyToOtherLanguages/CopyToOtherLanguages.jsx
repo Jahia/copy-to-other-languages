@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core';
 import {Button, Checkbox, Input, Typography} from '@jahia/moonstone';
 import {useTranslation} from 'react-i18next';
-import styles from './CopyToOtherLanguages.scss';
+import styles from './CopyToOtherLanguages.module.scss';
 import {useQuery} from '@apollo/client';
 import PropTypes from 'prop-types';
 import {getQuery} from './CopyToOtherLanguages.gql';
