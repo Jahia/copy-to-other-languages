@@ -12,9 +12,9 @@ export default defineConfig({
       },
       remotes: {
         "@jahia/jcontent": {
-          type: "appshell",
+          type: "window",
           name: "@jahia/jcontent",
-          entry: "global:appShell.remotes.jcontent",
+          entry: "window:appShell.remotes.jcontent",
         },
       },
       shared: {
@@ -24,6 +24,7 @@ export default defineConfig({
         "@apollo/client": { singleton: true },
         "@jahia/ui-extender": { singleton: true },
         "@jahia/moonstone": { singleton: true },
+        "react-i18next": { singleton: true },
         "rxjs": { singleton: true },
         "formik": { singleton: true },
       },
