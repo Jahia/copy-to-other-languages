@@ -595,6 +595,7 @@ __metadata:
     "@jahia/moonstone": "npm:^2.7.0"
     "@jahia/stylelint-config": "npm:^0.0.3"
     "@jahia/ui-extender": "npm:^1.1.0"
+    "@jahia/vite-federation-plugin": ./vite-federation-plugin.tgz
     "@material-ui/core": "npm:^3.9.3"
     "@module-federation/enhanced": "npm:^0.21.6"
     "@module-federation/vite": "npm:^1.9.1"
@@ -714,6 +715,17 @@ __metadata:
     react-iframe: "npm:^1.8.0"
     rxjs: "npm:^6.5.3"
   checksum: 10c0/ba889df7fc872e8f36975467000155f7891890053c019b9ae9f2fb3dd265880ee30ae58e54c2095dc06e99bdd7cf61d7221ba66bf00ee15a10941c7cc7e0e58e
+  languageName: node
+  linkType: hard
+
+"@jahia/vite-federation-plugin@file:./vite-federation-plugin.tgz::locator=%40jahia%2Fcopy-to-other-languages%40workspace%3A.":
+  version: 0.1.0
+  resolution: "@jahia/vite-federation-plugin@file:./vite-federation-plugin.tgz#./vite-federation-plugin.tgz::hash=d5747a&locator=%40jahia%2Fcopy-to-other-languages%40workspace%3A."
+  dependencies:
+    "@module-federation/vite": "npm:^1.9.4"
+  peerDependencies:
+    vite: ^7.0.0
+  checksum: 10c0/4c99df4d2d8202ed3b533cdbbd9bdd6b7a1625dc7d166f6fdb9b527706068b260e61e0c8f1872d609e8567606314042dfe671df574ad56c16d797bfb97bf8cb3
   languageName: node
   linkType: hard
 
@@ -1033,7 +1045,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@module-federation/runtime@npm:0.21.6":
+"@module-federation/runtime@npm:0.21.6, @module-federation/runtime@npm:^0.21.6":
   version: 0.21.6
   resolution: "@module-federation/runtime@npm:0.21.6"
   dependencies:
@@ -1062,7 +1074,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@module-federation/sdk@npm:0.21.6":
+"@module-federation/sdk@npm:0.21.6, @module-federation/sdk@npm:^0.21.6":
   version: 0.21.6
   resolution: "@module-federation/sdk@npm:0.21.6"
   checksum: 10c0/54f33fb48e1f3db09e03b529af9f28fcd8007c4dbd8b197cb0691c392f3eb143961c526e1ecd400f1d652451976a378da962edbb961f5859f33f56edda527f88
@@ -1092,6 +1104,21 @@ __metadata:
     magic-string: "npm:^0.30.11"
     pathe: "npm:^1.1.2"
   checksum: 10c0/b44c82f2dbe048ea564b81dc0bd508eab5dafeef5dd5330a276c66df5103c0962892a1aede3aae6aeaa276653d51e0a6a691900408bc8a501453be6c259c6c8b
+  languageName: node
+  linkType: hard
+
+"@module-federation/vite@npm:^1.9.4":
+  version: 1.9.4
+  resolution: "@module-federation/vite@npm:1.9.4"
+  dependencies:
+    "@module-federation/runtime": "npm:^0.21.6"
+    "@module-federation/sdk": "npm:^0.21.6"
+    "@rollup/pluginutils": "npm:^5.1.0"
+    defu: "npm:^6.1.4"
+    estree-walker: "npm:^2"
+    magic-string: "npm:^0.30.11"
+    pathe: "npm:^1.1.2"
+  checksum: 10c0/dd1d367ea0915f96c0fd30659be4e2c6e09626f30512e3c361c81c1d5abd428115d3feef37204fe65c22df72541967609c63c5b1fdec86e65f4c09d722d4b9ed
   languageName: node
   linkType: hard
 

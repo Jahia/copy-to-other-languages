@@ -49,6 +49,7 @@
   "devDependencies": {
     "@jahia/eslint-config": "2.1.0",
     "@jahia/stylelint-config": "^0.0.3",
+    "@jahia/vite-federation-plugin": "./vite-federation-plugin.tgz",
     "@module-federation/enhanced": "^0.21.6",
     "@module-federation/vite": "^1.9.1",
     "eslint": "^8.4.1",
