@@ -22,11 +22,3 @@ coverage/
 .DS_Store
 .yalc
 yalc.lock
-
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
