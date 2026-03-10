@@ -12,7 +12,7 @@ jobs:
     uses: Jahia/jahia-modules-action/.github/workflows/reusable-integration-tests.yml@v2
     with:
       module_id: copy-to-other-languages
-      module_branch: main
+      module_branch: ${{ github.ref }}
       jahia_image: ghcr.io/jahia/jahia-ee-dev:8-SNAPSHOT
       provisioning_manifest: provisioning-manifest-snapshot.yml
       artifact_prefix: ctol-jahia-sn
