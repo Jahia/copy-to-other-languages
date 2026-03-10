@@ -70,6 +70,7 @@ jobs:
     uses: Jahia/jahia-modules-action/.github/workflows/reusable-integration-tests.yml@v2
     with:
       module_id: copy-to-other-languages
+      module_branch: ${{ github.ref }}
       provisioning_manifest: provisioning-manifest-build.yml
       jahia_image: ghcr.io/jahia/jahia-ee-dev:8-SNAPSHOT
       should_use_build_artifacts: true
