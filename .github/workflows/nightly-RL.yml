@@ -15,6 +15,7 @@ jobs:
       module_branch: ${{ github.ref }}
       jahia_image: jahia/jahia-ee:8
       provisioning_manifest: provisioning-manifest-snapshot.yml
+      incident_service: copy-to-other-languages-JahiaRL
       artifact_prefix: ctol-jahia-rl
       timeout_job: 45
       timeout_step: 20
