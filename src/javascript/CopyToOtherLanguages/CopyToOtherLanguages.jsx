@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import styles from './CopyToOtherLanguages.module.scss';
 import {useQuery} from '@apollo/client';
 import PropTypes from 'prop-types';
-import {getQuery} from './CopyToOtherLanguages.gql';
+import {getQuery, isLanguageAvailable} from './CopyToOtherLanguages.gql';
 import WarningAlert from './WarningAlert';
 
 export const CopyToOtherLanguages = ({
@@ -25,11 +25,12 @@ export const CopyToOtherLanguages = ({
     const [filter, setFilter] = useState('');
     const [errorState, setErrorState] = useState('');
     const [warningModalShown, setWarningModalShown] = useState(false);
+    const [checking, setChecking] = useState(false);
     const isSingleField = !fields;
 
     const allLanguages = useMemo(() => siteLanguages.filter(l => l.language !== language), [siteLanguages, language]);
 
-    const {data, error} = useQuery(getQuery(allLanguages, path), {
+    const {data, error, refetch} = useQuery(getQuery(allLanguages, path), {
         errorPolicy: 'ignore',
         variables: {path}
     });
@@ -73,10 +74,35 @@ export const CopyToOtherLanguages = ({
         });
     };
 
-    const available = useMemo(() => {
-        const disabledLanguages = data ? allLanguages.filter(l => !data.jcr.nodeByPath[`perm_${l.language}`] || (data.jcr[`lock_${l.language}`] && data.jcr[`lock_${l.language}`].lockInfo.details.length > 0)) : allLanguages;
-        return allLanguages.filter(l => !disabledLanguages.includes(l)).map(l => l.language);
-    }, [data, allLanguages]);
+    const available = useMemo(() => (data ? allLanguages.filter(l => isLanguageAvailable(data, l.language)).map(l => l.language) : []), [data, allLanguages]);
+
+    /**
+     * Permissions and locks may have changed since the dialog was opened (role removed, content locked
+     * by another user...). The copy is only applied to the form and saved later by Content Editor, which
+     * would then fail with a generic error. Check them again right before copying, and show an explicit
+     * error listing the languages that cannot be written anymore.
+     */
+    const copyIfAllowed = async () => {
+        setChecking(true);
+        let freshData;
+        try {
+            freshData = (await refetch())?.data;
+        } catch (e) {
+            console.error(e);
+        }
+
+        setChecking(false);
+        const failed = selected.filter(lang => !isLanguageAvailable(freshData, lang));
+        if (failed.length > 0) {
+            setWarningModalShown(false);
+            setErrorState(allLanguages.filter(l => failed.includes(l.language)).map(l => l.displayName).join(', '));
+            return;
+        }
+
+        doCopy(selected);
+        setWarningModalShown(false);
+        onClose();
+    };
 
     useEffect(() => {
         setSelected(available);
@@ -89,7 +115,9 @@ export const CopyToOtherLanguages = ({
 
     const title = isSingleField ? t('copy-to-other-languages:label.dialogTitle', {propertyName: field.displayName}) : t('copy-to-other-languages:label.dialogTitleAllProperties');
     const description = isSingleField ? t('copy-to-other-languages:label.dialogDescription') : t('copy-to-other-languages:label.dialogDescriptionAllProperties');
-    const errorDescription = isSingleField ? t('copy-to-other-languages:label.errorContent', {property: field.displayName}) : t('copy-to-other-languages:label.errorContentAllProperties');
+    const errorDescription = isSingleField ?
+        t('copy-to-other-languages:label.errorContent', {property: field.displayName, languages: errorState}) :
+        t('copy-to-other-languages:label.errorContentAllProperties', {languages: errorState});
 
     return (
         <>
@@ -161,14 +189,13 @@ export const CopyToOtherLanguages = ({
                             data-sel-role="cancel-button"
                             onClick={onClose}/>
                     <Button size="big"
-                            isDisabled={selected.length === 0}
+                            isDisabled={selected.length === 0 || checking}
                             color="accent"
                             data-sel-role="copy-button"
                             label={t('copy-to-other-languages:label.copy')}
                             onClick={() => {
                                 if (isNew || isSingleField) {
-                                    doCopy(selected);
-                                    onClose();
+                                    copyIfAllowed();
                                 } else {
                                     setWarningModalShown(true);
                                 }
@@ -182,7 +209,8 @@ export const CopyToOtherLanguages = ({
                 open={Boolean(errorState)}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
-                onClose={() => setErrorState()}
+                data-sel-role="copy-language-error-dialog"
+                onClose={() => setErrorState('')}
             >
                 <DialogTitle id="alert-dialog-title">{t('copy-to-other-languages:label.errorTitle')}</DialogTitle>
                 <DialogContent>
@@ -192,7 +220,7 @@ export const CopyToOtherLanguages = ({
                     <Button label={t('copy-to-other-languages:label.cancel')}
                             color="accent"
                             size="big"
-                            onClick={() => setErrorState()}
+                            onClick={() => setErrorState('')}
                     />
                 </DialogActions>
             </Dialog>
@@ -201,9 +229,9 @@ export const CopyToOtherLanguages = ({
                 currentLanguage={currentDisplayName}
                 isOpen={warningModalShown}
                 onApply={() => {
-                    doCopy(selected);
-                    setWarningModalShown(false);
-                    onClose();
+                    if (!checking) {
+                        copyIfAllowed();
+                    }
                 }}
                 onClose={() => {
                     setWarningModalShown(false);
