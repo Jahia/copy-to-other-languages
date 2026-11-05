@@ -13,8 +13,8 @@ export function isLanguageAvailable(data, language) {
         return false;
     }
 
-    const translationLock = data.jcr[`lock_${language}`];
-    return Boolean(node[`perm_${language}`]) && !(translationLock?.lockInfo?.details?.length > 0);
+    const translationLockDetails = data.jcr[`lock_${language}`]?.lockInfo?.details ?? [];
+    return Boolean(node[`perm_${language}`]) && translationLockDetails.length === 0;
 }
 
 export function getQuery(allLanguages, path) {
