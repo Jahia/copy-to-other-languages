@@ -1,7 +1,7 @@
 {
   "name": "@jahia/copy-to-other-languages",
   "type": "module",
-  "version": "3.3.0-SNAPSHOT",
+  "version": "3.3.0",
   "scripts": {
     "build": "npm_package_json=./package.json vite build",
     "watch": "npm_package_json=./package.json vite build --watch",
