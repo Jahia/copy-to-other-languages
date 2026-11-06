@@ -1,5 +1,31 @@
 # copy-to-other-languages Changelog
 
+## 3.2.0
+
+### New Features
+
+* Added an action that copies all the properties of a content item to the other languages at once, instead of one field at a time. (#73, #74, #90)
+
+* Shortened the labels of the copy actions in English, French and German. (#96)
+
+## 3.1.1
+
+### Other Changes
+
+* The module now requires jcontent 3.2.0 and graphql-dxm-provider 3.2.0 or later. (#55)
+
+## 3.1.0
+
+### Bug Fixes
+
+* Fixed the copy action so an empty field can also be copied to the other languages, to clear the value there. (#47)
+
+## 3.0.1
+
+### Bug Fixes
+
+* Disabled the copy action when the content is locked and cannot be edited. (#40)
+
 ## 2.2.1 (Mon Jan 10 2022)
 
 ### 🐛 Bug Fix
