@@ -11,7 +11,8 @@ import {
     getComponent,
     getComponentByRole,
     grantRoles,
-    Menu
+    Menu,
+    revokeRoles
 } from '@jahia/cypress';
 import {threeDotsButton} from '../page-object/threeDots.button';
 import {JContent} from '../page-object/jcontent';
@@ -98,6 +99,8 @@ describe('Test copy to other languages', () => {
     beforeEach(() => {
         enableModule('ctol-definitions', siteKey);
         enableModule('copy-to-other-languages', siteKey);
+        // Restore the role in case a test removed it
+        grantRoles(`/sites/${siteKey}`, ['editor'], 'myUser', 'USER');
         cy.loginAndStoreSession();
     });
 
@@ -259,6 +262,28 @@ describe('Test copy to other languages', () => {
         const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
         getComponentByRole(Button, 'copy-button', dialog).click();
         contentEditor.save();
+        checkValues({uuid: this.uuid, en: 'test', fr: 'test', de: 'test'});
+    });
+
+    it('Should show an error when permissions are lost after opening the dialog', function () {
+        setLanguages(siteKey, ['en', 'fr', 'de']);
+        checkValues({uuid: this.uuid, en: 'test', fr: 'test', de: 'test'});
+
+        cy.login('myUser', 'password');
+        const jcontent = JContent.visit(siteKey, 'en', 'pages/home').switchToListMode();
+        jcontent.editComponentByText('test');
+        threeDotsButton.forField('jnt:mainContent_body').click();
+        getComponent(Menu).selectByRole('copyToOtherLanguages');
+        const dialog = getComponentByRole(BaseComponent, 'copy-language-dialog');
+        getComponentByRole(Button, 'copy-button', dialog).should('not.have.attr', 'disabled');
+
+        // Permissions are removed (as root) while the dialog is open
+        revokeRoles(`/sites/${siteKey}`, ['editor'], 'myUser', 'USER');
+
+        getComponentByRole(Button, 'copy-button', dialog).click();
+        getComponentByRole(BaseComponent, 'copy-language-error-dialog')
+            .should('contain', 'An error occurred when copying')
+            .and('contain', 'Ensure that the content is not locked or that you have sufficient permissions.');
         checkValues({uuid: this.uuid, en: 'test', fr: 'test', de: 'test'});
     });
 
