@@ -1,5 +1,15 @@
 # copy-to-other-languages Changelog
 
+## 3.3.0
+
+### New Features
+
+* Added "Copy all properties to..." to the more options menu of the translation view, so all properties can be copied to other languages while translating.
+
+### Bug Fixes
+
+* Fixed copying to other languages so it shows a clear error, instead of a generic save error, when a target language can no longer be edited because the content was locked or permissions were removed after the dialog was opened.
+
 ## 3.2.0
 
 ### New Features
