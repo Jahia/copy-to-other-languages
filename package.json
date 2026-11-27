@@ -1,7 +1,7 @@
 {
   "name": "@jahia/copy-to-other-languages",
   "type": "module",
-  "version": "4.0.0",
+  "version": "4.1.0-SNAPSHOT",
   "scripts": {
     "build": "vite build",
     "watch": "vite build --watch",
