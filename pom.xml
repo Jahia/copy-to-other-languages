@@ -10,7 +10,7 @@
     <groupId>org.jahia.modules</groupId>
     <artifactId>copy-to-other-languages</artifactId>
     <name>copy-to-other-languages</name>
-    <version>3.4.0-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <description>copy-to-other-languages</description>
     <scm>
@@ -22,8 +22,8 @@
 
     <properties>
         <yarn.arguments>build</yarn.arguments>
-        <jahia-module-signature>MCwCFCHVw/RnQ1f1MQuHNE5xqdHEd8+aAhR8+A2Qs15nDOtJU9cJcDApZs2ZcA==</jahia-module-signature>
-        <jahia-depends>app-shell=4.0,graphql-dxm-provider=3.2.0,jcontent=3.2.0</jahia-depends>
+        <jahia-module-signature>MCwCFHz7levpTLopLVhdf1lvTM5hr3VGAhRiMYH+u3nEyAmwGhGIn4Uu115Caw==</jahia-module-signature>
+        <jahia-depends>app-shell=4.0,graphql-dxm-provider=3.2.0,jcontent=3.8.1</jahia-depends>
     </properties>
 
     <repositories>
