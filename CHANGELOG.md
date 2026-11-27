@@ -1,5 +1,9 @@
 # copy-to-other-languages Changelog
 
+## 4.0.0
+
+* Changed the module to require Jahia 8.2.2.0, app-shell 4.0 and jContent 3.8.1 or later: it no longer starts on an earlier version. Upgrade Jahia, app-shell and jContent before you upgrade this module.
+
 ## 3.3.0
 
 ### New Features
